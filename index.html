@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчет геометрических характеристик</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script src="script.js" defer></script>
+
+<body>
+    <header>
+        <div>
+            <p>ОТЧЕТ О РЕЗУЛЬТАТАХ КОНТРОЛЯ ГЕОМЕТРИЧЕСКОЙ ФОРМЫ</p>
+            <p> № <input type="text" name="report-number" id="report-number" pattern="\d*">-<input type="text"
+                    name="super-order-number" id="super-order-number">-<span>2023</span> </p>
+            <p> от <input type="date" name="report-date" id="report-date"></p>
+            <span class="snsz-logo">АО "СНСЗ"</span>
+        </div>
+        <div>
+            <p>ОСНОВАНИЕ заявка № <input type="text" name="order-number" id="order-number"> от <input type="date"
+                    name="order-date" id="order-date"></p>
+            <p>Приложение к предъявлению № <input type="text" name="receipt-number" id="receipt-number"> от <input
+                    type="date" name="receipt-date" id="receipt-date"></p>
+        </div>
+    </header>
+    <div class="main">
+        <section>
+            <div class="order">
+                <p>Заказ №<span class="super-order">01717</span> </p>
+                <p>Объект <input type="text" name="order-object" id="order-object"></p>
+                <p><span>Этап измерений</span> <label for="other"><input type="checkbox" name="other"
+                            id="other">Другое</label></p>
+                <select>
+                    <option value="before-welding-itself">Перед сваркой</option>
+                    <option value="after-welding-itself"> После сварки</option>
+                    <option value="before-welding-mounting">Перед сваркой на заказе</option>
+                    <option value="before-welding-mounting">После сварки на заказе</option>
+                </select>
+                <p>Дата проведения измерений <input type="date" name="measure-date" id="measure-date"></p>
+                <p>Место проведения измерений <input type="text" name="measure-place" id="measure-place"></p>
+            </div>
+            <div class="sources">
+
+                <table>
+                    <tr>
+                        <th>РД, НД, РКД</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="first-sorce" id="first-sorce"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="second-sorce" id="second-sorce"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="third-sorce" id="third-sorce"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="forth-sorce" id="forth-sorce"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="fifth-sorce" id="fifth-sorce"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="six-sorce" id="six-sorce"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="instruments">
+                <table>
+                    <tr>
+                        <th>Наименование средства измерения</th>
+                        <th>Заводской №</th>
+                        <th>Свидетельство о поверке</th>
+                    </tr>
+                    <tr class="first-instrument">
+                        <td><input list="instruments" id="first-instrument" name="first-instrument"></td>
+                        <td>890213</td>
+                        <td>С-/Т14-12-2022/208731450</td>
+                    </tr>
+                    <tr class="second-instrument">
+                        <td><input list="instruments" id="second-instrument" name="second-instrument"></td>
+                        <td>890213</td>
+                        <td>С-/Т14-12-2022/208731450</td>
+                    </tr>
+                    <tr class="third-instrument">
+                        <td><input list="instruments" id="third-instrument" name="third-instrument"></td>
+                        <td>890213</td>
+                        <td>С-/Т14-12-2022/208731450</td>
+                    </tr>
+                    <datalist id="instruments">
+                        <option value="Chocolate"></option>
+                        <option value="Coconut"></option>
+                        <option value="Mint"></option>
+                        <option value="Strawberry"></option>
+                        <option value="Vanilla"></option>
+                    </datalist>
+                </table>
+            </div>
+            <div class="summary">
+                <span>Заключение по результатам измерений</span>
+                <div class="check-boxes">
+                    <label for="full-measure"><input type="checkbox" name="full-measure" id="full-measure">Измерения
+                        выполнены в
+                        полном объеме</label>
+                    <label for="acceptance"><input type="checkbox" name="acceptance" id="acceptance">Отклонение в
+                        пределах
+                        допустимых</label>
+                    <label for="to-correct-required"><input type="checkbox" name="to-correct-required"
+                            id="to-correct-required">Требуется исправление конструкции</label>
+                </div>
+                <div class="remarks">
+                    <span>Замечания</span>
+                    <textarea name="remarks" id="remarks"></textarea>
+                </div>
+                <div class="signature">
+                    <select>
+                        <option value="chief">Начальник отдела размерного контроля</option>
+                        <option value="sub-chief">ВрИО Начальника отдела размерного контроля</option>
+                    </select>
+                    <div class="sign"></div>
+                    <select name="chief-person" id="chief-person">
+                        <option value="polyakov">Поляков Н.А.</option>
+                        <option value="kalchenko">Кальченко Е.А.</option>
+                        <option value="mysnik">Мысник А.В.</option>
+                    </select>
+
+                </div>
+            </div>
+
+        </section>
+        <section>
+
+            <div class="resolution">
+                <div>ЗАКЛЮЧЕНИЕ</div>
+                <textarea name="resolution" id="resolution"></textarea>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="3">Ответственный</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>
+                            ФИО
+                        </td>
+                        <td>Дата</td>
+                        <td>Подпись</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="resolve">
+                <div>РЕШЕНИЕ ТУ</div>
+                <textarea name="resolve" id="resolve"></textarea>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="3">Ответственный</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>
+                            ФИО
+                        </td>
+                        <td>Дата</td>
+                        <td>Подпись</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>Исполнитель ФИО<select>
+                <option value="adzaharikov">Захариков А.Д.</option>
+                <option value="eakalchenko">Кальченко Е.А.</option>
+                <option value="avmysnik">Мысник А.В.</option>
+                <option value="yvnesterkin">Нестеркин Ю.В.</option>
+                <option value="asostanin">Останин А.С.</option>
+                <option value="napolyakov">Поляков Н.А</option>
+            </select></p>
+        <p>Подпись______________________Дата<input type="date"></p>
+    </footer>
+</body>
+
+</html>
