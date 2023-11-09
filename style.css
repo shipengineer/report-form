@@ -5,6 +5,8 @@
 }
 
 body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
   margin-left: 5mm;
   height: 210mm;
   width: 297mm;
@@ -13,9 +15,16 @@ body {
 }
 
 input[type=text] {
+  width: 100%;
   text-align: center;
   border: none;
   border-bottom: 1px solid #000;
+  padding: 2px;
+}
+
+input {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
 }
 
 select {
@@ -32,6 +41,7 @@ select {
 }
 
 header {
+  padding: 5px 10px;
   border: 2px solid #000;
   display: flex;
   flex-direction: column;
@@ -40,8 +50,10 @@ header > div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border: 1px solid #000;
   padding: 2px;
+}
+header > div:first-child {
+  border-bottom: 1px solid #000;
 }
 header > div > p:first-child {
   margin-right: 5px;
@@ -51,9 +63,6 @@ header #report-number {
 }
 header #super-order-number {
   width: 40px;
-}
-header #report-date {
-  width: 100px;
 }
 header #order-number {
   width: 40px;
@@ -98,110 +107,174 @@ header .snsz-logo {
 }
 
 .sources {
-  border: 2px solid #000;
-  padding: 2px;
+  border-right: 2px solid #000;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr;
 }
 .sources th {
   border: 1px solid #000;
 }
 .sources table {
-  width: 100%;
-}
-.sources td > input {
-  border-top: 0;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
-  width: 100%;
-}
-.sources td {
-  padding-top: 5px;
+  border: 1px solid #000;
+  border-right: none;
 }
 
-.instruments {
-  border: 2px solid #000;
+.instruments table,
+.sources table {
+  font-size: 14px;
+  border-spacing: 0px;
+}
+.instruments .instruments-item input,
+.sources .instruments-item input {
   padding: 2px;
-}
-.instruments table {
-  width: 100%;
-  font-size: 20px;
-}
-.instruments input {
   width: 100%;
   border: none;
-  font-size: 20px;
+  font-size: 14px;
   text-align: center;
 }
-.instruments th:not(:nth-child(2)) {
-  border: 1px solid #000;
+.instruments th,
+.sources th {
+  text-wrap: nowrap;
+  width: 100%;
+  font-size: 14px;
+  padding: 5px;
 }
-.instruments th:nth-child(2) {
+.instruments th:first-child,
+.sources th:first-child {
+  word-wrap: normal;
+}
+.instruments th:nth-child(2),
+.sources th:nth-child(2) {
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
 }
-.instruments td:nth-child(1) {
+.instruments td:nth-child(1),
+.sources td:nth-child(1) {
+  word-wrap: normal;
   border-right: 1px solid #000;
   border-left: 1px solid #000;
   border-bottom: 1px solid #000;
 }
-.instruments td:nth-child(2) {
+.instruments td:nth-child(2),
+.sources td:nth-child(2) {
+  text-wrap: nowrap;
   border-bottom: 1px solid #000;
 }
-.instruments td:nth-child(3) {
+.instruments td:nth-child(3),
+.sources td:nth-child(3) {
+  text-wrap: nowrap;
   border-right: 1px solid #000;
   border-left: 1px solid #000;
   border-bottom: 1px solid #000;
 }
-.instruments td {
+.instruments td,
+.sources td {
   text-align: center;
-  padding-top: 10px;
-  font-size: 20px;
+}
+
+.sources-table input {
+  border: none;
+}
+
+.remarks {
+  margin-top: 5px;
+  border: 2px solid #000;
+  display: flex;
+  flex-direction: column;
+}
+.remarks span {
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 2px solid #000;
+}
+.remarks #remarks {
+  height: 200px;
 }
 
 .summary {
   display: grid;
   grid-template-columns: 350px 1fr;
   grid-template-rows: 1.5rem 1fr;
+  height: 200px;
   border: 2px solid #000;
-  padding: 2px;
+  border-top: none;
 }
 .summary span {
+  font-weight: bold;
   grid-column: 1/3;
   text-align: center;
   border: 1px solid #000;
+  border-top: none;
 }
 .summary .check-boxes {
+  grid-row: 2;
+  grid-column: 1/3;
+  width: 100%;
+  height: 100%;
   margin-top: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
+  font-size: 14px;
 }
-.summary .remarks {
+.summary .check-boxes label {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.summary .remarks span {
-  width: 100%;
+.summary .check-boxes label:first-child {
+  margin-left: 10px;
 }
-.summary .remarks #remarks {
-  height: 100px;
+.summary .check-boxes input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.summary .check-boxes input + label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.summary .check-boxes input + label::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 3px solid #000;
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+.summary .check-boxes input:checked + label::before {
+  background-image: url(./img/cross-svgrepo-com.svg);
+  background-size: 20px;
+}
+.summary .check-boxes #label_1,
+.summary .check-boxes #label_2,
+.summary .check-boxes #label_3 {
+  -webkit-text-decoration: line-through 2px;
+          text-decoration: line-through 2px;
 }
 
 .signature {
-  grid-row: 3;
-  grid-column: 1/span 2;
-  align-self: flex-end;
+  grid-row: 4;
+  grid-column: 2;
+  justify-content: end;
   display: flex;
   padding: 10px;
 }
 .signature .sign {
-  width: 100px;
+  width: 200px;
   height: 1rem;
   border-bottom: 1px solid #000;
-}
-
-.check-boxes input {
-  margin: 5px;
 }
 
 .resolution,
@@ -212,12 +285,13 @@ header .snsz-logo {
 .resolve div {
   text-align: center;
   padding: 5px;
+  border: 1px solid #000;
   background-color: #8d8d8d;
 }
 .resolution textarea,
 .resolve textarea {
   width: 100%;
-  height: 204px;
+  height: 219px;
 }
 .resolution table,
 .resolve table {
@@ -230,14 +304,20 @@ header .snsz-logo {
 }
 .resolution td,
 .resolve td {
-  width: 200px;
+  text-align: center;
   border: 1px solid #000;
   height: 30px;
 }
+.resolution td:not(:first-child),
+.resolve td:not(:first-child) {
+  width: 50px;
+}
 
 footer {
+  grid-column: 1/4;
+  padding: 20px 0 20px 10px;
+  grid-row: 3;
   display: flex;
-  gap: 10px;
   align-self: flex-end;
 }
 
@@ -247,5 +327,8 @@ footer {
     margin-left: 5mm;
     height: 210mm;
     width: 297mm;
+  }
+  .other {
+    display: none;
   }
 }/*# sourceMappingURL=style.css.map */
