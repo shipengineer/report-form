@@ -4,12 +4,41 @@ async function render() {
     let iData = await responce.json();
 
     const instrumentsDatalist = document.querySelector("#instruments");
-    console.log(iData);
+    const iInstruments = iData.instruments;
+    iInstruments.forEach((element) => {
+      const newOption = document.createElement("option");
+      newOption.textContent = element["instrument-name"];
+      instrumentsDatalist.append(newOption);
+    });
+    console.log(iInstruments);
     const year = document.querySelector("#year");
     year.textContent = iData.year;
+    const table = document.querySelector(".instruments");
+    let requiredInstrument;
+    table.addEventListener("change", (e) => {
+      requiredInstrument = null;
+      const target = e.target;
+      iInstruments.map((elem) => {
+        if (elem["instrument-name"] === target.value) {
+          requiredInstrument = elem;
+        }
+      });
+      const tdOfRequiredInstrument = target.parentNode;
+      const tdSiblingNumber = tdOfRequiredInstrument.nextSibling.nextSibling;
+      console.log(tdSiblingNumber);
+      const SiblingSiblingCertificate = tdSiblingNumber.nextSibling.nextSibling;
+      console.log(SiblingSiblingCertificate);
+      tdSiblingNumber.textContent = requiredInstrument["instrument-number"];
+      SiblingSiblingCertificate.textContent =
+        requiredInstrument["instrument-certificate"];
+    });
   }
 }
-render();
+async function toChange() {
+  await render();
+}
+toChange();
+
 // _________________________________________________________________________
 const check_1 = document.querySelector("#full-measure");
 const check_2 = document.querySelector("#acceptance");
@@ -31,12 +60,5 @@ superOrderNumber.addEventListener("input", (e) => {
 // _________________________________________________________________________
 const other = document.querySelector("#other");
 const otherText = document.querySelector("#other-text");
-other.addEventListener("change", () => {
-  if (other.checked === true) {
-    otherText.style = "display:block";
-    document.querySelector("#stage-select").style = "display:none";
-  } else {
-    otherText.style = "display:none";
-    document.querySelector("#stage-select").style = "display:block";
-  }
-});
+
+// _________________________________________________________________________

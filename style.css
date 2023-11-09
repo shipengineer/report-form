@@ -45,6 +45,8 @@ select {
 }
 
 #other-text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
   display: block;
   justify-self: start;
   grid-row: 3/span 2;
