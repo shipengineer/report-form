@@ -1,3 +1,4 @@
+$main: 1px solid #000;
 * {
   margin: 0;
   box-sizing: border-box;
@@ -9,14 +10,24 @@ body {
   margin-left: 5mm;
 
   width: 297mm;
+
   display: flex;
   flex-direction: column;
+  & .main_page,
+  & .new-page {
+    padding: 20mm 10mm 0mm 10mm;
+    height: 210mm;
+    & .bottom-title {
+      height: 10mm;
+      text-align: end;
+    }
+  }
 }
 input[type="text"] {
   width: 100%;
   text-align: center;
   border: none;
-  border-bottom: 1px solid #000;
+  border-bottom: $main;
   padding: 2px;
 }
 
@@ -26,7 +37,7 @@ input {
 }
 select {
   border: none;
-  border-bottom: 1px solid #000;
+  border-bottom: $main;
   height: 1rem;
   user-select: none;
   -webkit-appearance: none;
@@ -60,7 +71,7 @@ header {
   flex-direction: column;
   & > div {
     &:first-child {
-      border-bottom: 1px solid #000;
+      border-bottom: $main;
     }
     display: flex;
     flex-direction: row;
@@ -128,10 +139,10 @@ header {
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 1fr;
   & th {
-    border: 1px solid #000;
+    border: $main;
   }
   & table {
-    border: 1px solid #000;
+    border: $main;
     border-right: none;
   }
 }
@@ -163,25 +174,25 @@ header {
   }
 
   & th:nth-child(2) {
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
+    border-top: $main;
+    border-bottom: $main;
   }
   & td:nth-child(1) {
     word-wrap: normal;
-    border-right: 1px solid #000;
-    border-left: 1px solid #000;
-    border-bottom: 1px solid #000;
+    border-right: $main;
+    border-left: $main;
+    border-bottom: $main;
   }
   & td:nth-child(2) {
     text-wrap: nowrap;
-    border-bottom: 1px solid #000;
+    border-bottom: $main;
   }
   & td:nth-child(3) {
     text-wrap: nowrap;
 
-    border-right: 1px solid #000;
-    border-left: 1px solid #000;
-    border-bottom: 1px solid #000;
+    border-right: $main;
+    border-left: $main;
+    border-bottom: $main;
   }
   & td {
     text-align: center;
@@ -223,7 +234,7 @@ header {
     font-weight: bold;
     grid-column: 1 /3;
     text-align: center;
-    border: 1px solid #000;
+    border: $main;
 
     border-top: none;
   }
@@ -278,7 +289,7 @@ header {
     margin-top: 10px;
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    justify-content: space-around;
     font-size: 14px;
   }
 
@@ -294,18 +305,18 @@ header {
   & .sign {
     width: 200px;
     height: 1rem;
-    border-bottom: 1px solid #000;
+    border-bottom: $main;
   }
 }
 
 .resolution,
 .resolve {
-  width: 225px;
+  width: 100%;
 
   & div {
     text-align: center;
     padding: 5px;
-    border: 1px solid #000;
+    border: $main;
     background-color: #8d8d8d;
   }
   & textarea {
@@ -313,10 +324,10 @@ header {
     height: 265px;
   }
   & table {
-    width: 225px;
+    width: 100%;
   }
   & th {
-    border: 1px solid #000;
+    border: $main;
     text-align: center;
   }
   & td {
@@ -324,7 +335,7 @@ header {
       width: 50px;
     }
     text-align: center;
-    border: 1px solid #000;
+    border: $main;
     height: 30px;
   }
 }
@@ -336,13 +347,55 @@ footer {
   display: flex;
   align-self: flex-end;
 }
+.new-page {
+  height: 210mm;
+  display: grid;
+  grid-template-rows: 12mm 1fr 10mm;
+  &-header {
+    display: flex;
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      border: $main;
+    }
 
+    &-section {
+      display: flex;
+      flex-wrap: wrap;
+      & > span {
+        text-wrap: nowrap;
+        border: $main;
+      }
+      &-id,
+      &-date {
+        padding: 2px 0.5rem;
+      }
+
+      &-order--number {
+        padding: 2px 0.5rem;
+        flex-grow: 1;
+      }
+      &-order--description {
+        width: 100%;
+        padding: 2px;
+      }
+    }
+  }
+  &-content {
+    border: $main;
+  }
+}
 @media print {
   html,
   body {
     margin-left: 5px;
 
     width: 297mm;
+  }
+  button {
+    display: none;
   }
   .other {
     display: none;

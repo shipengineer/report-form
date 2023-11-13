@@ -12,6 +12,14 @@ body {
   display: flex;
   flex-direction: column;
 }
+body .main_page, body .new-page {
+  padding: 20mm 10mm 0mm 10mm;
+  height: 210mm;
+}
+body .main_page .bottom-title, body .new-page .bottom-title {
+  height: 10mm;
+  text-align: end;
+}
 
 input[type=text] {
   width: 100%;
@@ -236,7 +244,7 @@ header .snsz-logo {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  justify-content: space-around;
   font-size: 14px;
 }
 .summary .check-boxes label {
@@ -299,7 +307,7 @@ header .snsz-logo {
 
 .resolution,
 .resolve {
-  width: 225px;
+  width: 100%;
 }
 .resolution div,
 .resolve div {
@@ -315,7 +323,7 @@ header .snsz-logo {
 }
 .resolution table,
 .resolve table {
-  width: 225px;
+  width: 100%;
 }
 .resolution th,
 .resolve th {
@@ -341,11 +349,52 @@ footer {
   align-self: flex-end;
 }
 
+.new-page {
+  height: 210mm;
+  display: grid;
+  grid-template-rows: 12mm 1fr 10mm;
+}
+.new-page-header {
+  display: flex;
+}
+.new-page-header-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  border: 1px solid #000;
+}
+.new-page-header-section {
+  display: flex;
+  flex-wrap: wrap;
+}
+.new-page-header-section > span {
+  text-wrap: nowrap;
+  border: 1px solid #000;
+}
+.new-page-header-section-id, .new-page-header-section-date {
+  padding: 2px 0.5rem;
+}
+.new-page-header-section-order--number {
+  padding: 2px 0.5rem;
+  flex-grow: 1;
+}
+.new-page-header-section-order--description {
+  width: 100%;
+  padding: 2px;
+}
+.new-page-content {
+  border: 1px solid #000;
+}
+
 @media print {
   html,
   body {
     margin-left: 5px;
     width: 297mm;
+  }
+  button {
+    display: none;
   }
   .other {
     display: none;
