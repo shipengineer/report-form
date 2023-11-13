@@ -354,16 +354,19 @@ footer {
   &-header {
     display: flex;
     &-title {
+      padding: 0 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 50%;
       border: $main;
+      text-wrap: nowrap;
     }
 
     &-section {
       display: flex;
       flex-wrap: wrap;
+      width: 100%;
       & > span {
         text-wrap: nowrap;
         border: $main;

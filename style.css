@@ -358,15 +358,18 @@ footer {
   display: flex;
 }
 .new-page-header-title {
+  padding: 0 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 50%;
   border: 1px solid #000;
+  text-wrap: nowrap;
 }
 .new-page-header-section {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 .new-page-header-section > span {
   text-wrap: nowrap;

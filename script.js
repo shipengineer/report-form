@@ -112,4 +112,42 @@ const other = document.querySelector("#other");
 const otherText = document.querySelector("#other-text");
 
 // _________________________________________________________________________
-function addNewPage() {}
+let pageCounter = 1;
+let totalPages = 1;
+const bodyTag = document.querySelector("body");
+const reportDate = document.querySelector("#report-date");
+const orderDescription = document.querySelector("#order-object");
+const reportID = document.querySelector("#report-number");
+function addNewPage() {
+  pageCounter++;
+
+  bodyTag.insertAdjacentHTML(
+    "beforeend",
+    `<section class="new-page">
+      <div class="new-page-header">
+        <p class="new-page-header-title">
+          ОТЧЕТ О РЕЗУЛЬТАТАХ КОНТРОЛЯ ГЕОМЕТРИЧЕСКОЙ ФОРМЫ
+        </p>
+        <div class="new-page-header-section">
+          <span class="new-page-header-section-id">Отчет № ${reportID.value}-${superOrderNumber.value}-${year.textContent}</span>
+          <span class="new-page-header-section-date"> от ${reportDate.value} </span>
+
+          <span class="new-page-header-section-order--number">
+            Заказ № ${superOrderNumber.value} </span
+          >
+          <span class="new-page-header-section-order--description"
+            >${orderDescription.value}</span
+          >
+        </div>
+      </div>
+      <div class="new-page-content"></div>
+      <div class="bottom-title">Лист ${pageCounter} из </div>
+    </section>
+    <button onclick=""></button>`
+  );
+  const allPagesCount = document.querySelectorAll(".bottom-title");
+  allPagesCount.forEach((elem, i) => {
+    console.log(pageCounter);
+    elem.textContent = "Лист " + (i + 1) + " из " + pageCounter;
+  });
+}
