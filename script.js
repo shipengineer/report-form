@@ -168,11 +168,11 @@ function addNewPage() {
       console.log(picsInPages);
       section.insertAdjacentHTML(
         "beforeend",
-        ` <img  id='img#${pageCounter}-${
+        ` <div  id='img#${pageCounter}-${
           picsInPages[`${pageCounter}`][
             picsInPages[`${pageCounter}`].length - 1
           ]
-        }' class ="report-images"  height =auto>
+        }' class ="report-images"  ></div>
       <input type="file" name="newImg" id="${pageCounter}-${
           picsInPages[`${pageCounter}`][
             picsInPages[`${pageCounter}`].length - 1
@@ -209,7 +209,7 @@ function addNewPage() {
 
         const fileReader = new FileReader();
         fileReader.onload = function () {
-          newImg.src = fileReader.result;
+          newImg.style = `background-image:url('${fileReader.result}'); background-size:contain; background-repeat:no-repeat`;
         };
         console.log(newImg);
         fileReader.readAsDataURL(target.files[0]);

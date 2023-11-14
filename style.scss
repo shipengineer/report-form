@@ -388,11 +388,11 @@ footer {
     }
   }
   &-content {
-    display: flex;
-    max-width: 100%;
-    max-height: 100%;
-    & img {
-      max-width: 100%;
+    display: grid;
+    grid-template-columns: minmax(50%, 100%) minmax(50%, 100%);
+
+    & div {
+      background-size: cover;
     }
     & .buttonToAddImg {
       // position: absolute;
