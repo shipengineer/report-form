@@ -51,6 +51,7 @@ const instrumets = {
   ],
   year: 2023,
 };
+const picsInPages = {};
 function render() {
   {
     // let responce = await fetch("./data.json");
@@ -120,10 +121,12 @@ const orderDescription = document.querySelector("#order-object");
 const reportID = document.querySelector("#report-number");
 function addNewPage() {
   pageCounter++;
-
+  picsInPages[`${pageCounter}`] = [];
   bodyTag.insertAdjacentHTML(
     "beforeend",
-    `<section class="new-page">
+
+    `<p id = "page#${pageCounter}" style="display:none">${pageCounter}<p>
+    <section class="new-page" >
       <div class="new-page-header">
         <p class="new-page-header-title">
           ОТЧЕТ О РЕЗУЛЬТАТАХ КОНТРОЛЯ ГЕОМЕТРИЧЕСКОЙ ФОРМЫ
@@ -140,14 +143,80 @@ function addNewPage() {
           >
         </div>
       </div>
-      <div class="new-page-content"></div>
+      <div class="new-page-content" id=${pageCounter}>
+      <button class="buttonToAddImg"  >Добавить изображение</button>
+      </div>
       <div class="bottom-title">Лист ${pageCounter} из </div>
-    </section>
-    <button onclick=""></button>`
+      </section>
+     `
   );
   const allPagesCount = document.querySelectorAll(".bottom-title");
   allPagesCount.forEach((elem, i) => {
     console.log(pageCounter);
     elem.textContent = "Лист " + (i + 1) + " из " + pageCounter;
   });
+  const newContent = document.getElementById(`${pageCounter}`);
+  newContent.addEventListener("click", (e) => {
+    console.log(e.target.tagName);
+    if (e.target.tagName === "BUTTON") {
+      picsInPages[`${pageCounter}`].push(
+        picsInPages[`${pageCounter}`].length + 1
+      );
+
+      const section = e.currentTarget;
+      console.log(section);
+      console.log(picsInPages);
+      section.insertAdjacentHTML(
+        "beforeend",
+        ` <img  id='img#${pageCounter}-${
+          picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+          ]
+        }' class ="report-images"  height =auto>
+      <input type="file" name="newImg" id="${pageCounter}-${
+          picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+          ]
+        }" accept="image/*" >
+    `
+      );
+      const newInput = document.getElementById(
+        `${pageCounter}-${
+          picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+          ]
+        }`
+      );
+      const newImg = document.getElementById(
+        `img#${pageCounter}-${
+          picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+          ]
+        }`
+      );
+      newInput.addEventListener("change", (e) => {
+        const target = e.target;
+        console.log(target);
+        if (!FileReader) {
+          alert("FileReader не поддерживается — облом");
+          return;
+        }
+
+        if (!target.files.length) {
+          alert("Ничего не загружено");
+          return;
+        }
+
+        const fileReader = new FileReader();
+        fileReader.onload = function () {
+          newImg.src = fileReader.result;
+        };
+        console.log(newImg);
+        fileReader.readAsDataURL(target.files[0]);
+        target.style = "display:none";
+      });
+    }
+  });
 }
+function FR() {}
+// newImg.addEventListener("change", FR);
