@@ -127,6 +127,7 @@ function addNewPage() {
 
     `<p id = "page#${pageCounter}" style="display:none">${pageCounter}<p>
     <section class="new-page" >
+    <button style="position:absolute" class="remove-page-button">Удалить страницу</button>
       <div class="new-page-header">
         <p class="new-page-header-title">
           ОТЧЕТ О РЕЗУЛЬТАТАХ КОНТРОЛЯ ГЕОМЕТРИЧЕСКОЙ ФОРМЫ
@@ -247,6 +248,17 @@ document.addEventListener("click", (e) => {
     // console.log(e.target.parentNode);
     e.target.parentNode.nextSibling.nextSibling.remove();
     e.target.parentNode.remove();
+  }
+  if (
+    e.target.tagName === "BUTTON" &&
+    e.target.classList.contains("remove-page-button")
+  ) {
+    e.target.parentNode.remove();
+    pageCounter--;
+    const allPagesCount = document.querySelectorAll(".bottom-title");
+    allPagesCount.forEach((elem, i) => {
+      elem.textContent = "Лист " + (i + 1) + " из " + pageCounter;
+    });
   }
 });
 function FR() {}
