@@ -46,34 +46,32 @@
       <div class="main">
         <section class="main-section">
           <div class="order">
-            <p>Заказ №<span id="super-order">9999</span></p>
-            <p>
+            <p>Заказ №<input type="text" id="super-order" value="9999" /></p>
+            <p id="object">
               Объект <input type="text" name="order-object" id="order-object" />
             </p>
             <p>
               <span>Этап измерений</span>
-              <!-- <label for="other" class="other"
-              ><input type="checkbox" name="other" id="other" />Другое</label
-            > -->
+
+              <select id="stage-select">
+                <option value="others">Другое</option>
+                <option value="before-welding-itself">Перед сваркой</option>
+                <option value="after-welding-itself">После сварки</option>
+                <option value="before-welding-mounting">
+                  Перед сваркой на заказе
+                </option>
+                <option value="before-welding-mounting">
+                  После сварки на заказе
+                </option>
+              </select>
             </p>
-            <select id="stage-select">
-              <option value="others">Другое</option>
-              <option value="before-welding-itself">Перед сваркой</option>
-              <option value="after-welding-itself">После сварки</option>
-              <option value="before-welding-mounting">
-                Перед сваркой на заказе
-              </option>
-              <option value="before-welding-mounting">
-                После сварки на заказе
-              </option>
-            </select>
             <textarea type="text" name="other-text" id="other-text"></textarea>
             <p class="measure-date-other">
               Дата проведения измерений
               <input type="date" name="measure-date" id="measure-date" />
             </p>
             <p>
-              Место проведения измерений
+              Место измерений
               <input type="text" name="measure-place" id="measure-place" />
             </p>
           </div>

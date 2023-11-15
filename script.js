@@ -106,7 +106,7 @@ document.querySelector(".check-boxes").addEventListener("change", (e) => {
 const superOrder = document.querySelector("#super-order");
 const superOrderNumber = document.querySelector("#super-order-number");
 superOrderNumber.addEventListener("input", (e) => {
-  superOrder.textContent = superOrderNumber.value;
+  superOrder.value = superOrderNumber.value;
 });
 // _________________________________________________________________________
 const other = document.querySelector("#other");

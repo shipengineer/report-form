@@ -10,7 +10,9 @@ body {
   margin-left: 5mm;
 
   width: 297mm;
-
+  textarea {
+    padding: 10px;
+  }
   display: flex;
   flex-direction: column;
   & .main_page,
@@ -60,6 +62,9 @@ input {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
+#super-order {
+  width: 100px;
+}
 select {
   border: none;
   border-bottom: $main;
@@ -71,10 +76,15 @@ select {
   text-align: center;
 }
 .measure-date-other {
-  margin-right: 30px;
-  text-wrap: nowrap;
+  justify-self: flex-start;
+  white-space: nowrap;
 }
-
+#measure-place {
+  width: 150px;
+}
+#object {
+  justify-self: flex-start;
+}
 #other-text {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
@@ -140,16 +150,17 @@ header {
 }
 
 .order {
-  row-gap: 0px;
+  row-gap: 5px;
   align-items: center;
-  justify-items: end;
+  justify-items: start;
   display: grid;
   grid-template-columns: 350px 1fr;
   grid-template-rows: 1fr 1fr;
 
   & > *:nth-child(2n) {
     width: 70%;
-    justify-self: center;
+    justify-self: start;
+    text-align: left;
   }
   & #order-object {
     width: 80%;
@@ -188,7 +199,7 @@ header {
     }
   }
   & th {
-    text-wrap: nowrap;
+    white-space: nowrap;
 
     width: 100%;
     font-size: 14px;
@@ -209,17 +220,18 @@ header {
     border-bottom: $main;
   }
   & td:nth-child(2) {
-    text-wrap: nowrap;
+    white-space: nowrap;
     border-bottom: $main;
   }
   & td:nth-child(3) {
-    text-wrap: nowrap;
+    white-space: nowrap;
 
     border-right: $main;
     border-left: $main;
     border-bottom: $main;
   }
   & td {
+    padding: 0px 2px;
     text-align: center;
 
     // padding: 10px;
@@ -247,6 +259,9 @@ header {
   }
   #remarks {
     height: 150px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
   }
 }
 .summary {
@@ -386,7 +401,7 @@ footer {
       justify-content: center;
       width: 50%;
       border: $main;
-      text-wrap: nowrap;
+      white-space: nowrap;
     }
 
     &-section {
@@ -394,7 +409,7 @@ footer {
       flex-wrap: wrap;
       width: 100%;
       & > span {
-        text-wrap: nowrap;
+        white-space: nowrap;
         border: $main;
       }
       &-id,
