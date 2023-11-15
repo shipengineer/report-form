@@ -21,6 +21,27 @@ body .main_page .bottom-title, body .new-page .bottom-title {
   text-align: end;
 }
 
+.report-images .remove-button {
+  z-index: 1;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.report-images .size-button {
+  z-index: 1;
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  width: 200px;
+}
+
+.report-images:has(.size-button:hover),
+.report-images:has(.remove-button:hover) {
+  border: 3px dotted red;
+}
+
 input[type=text] {
   width: 100%;
   text-align: center;
@@ -87,10 +108,10 @@ header > div > p:first-child {
   margin-right: 5px;
 }
 header #report-number {
-  max-width: 35px;
+  max-width: 50px;
 }
 header #super-order-number {
-  width: 40px;
+  width: 50px;
 }
 header #order-number {
   width: 40px;
@@ -352,7 +373,7 @@ footer {
 .new-page {
   height: 210mm;
   display: grid;
-  grid-template-rows: 12mm 1fr 10mm;
+  grid-template-rows: 12mm 168mm 10mm;
   position: relative;
 }
 .new-page-header {
@@ -388,13 +409,26 @@ footer {
   padding: 2px;
 }
 .new-page-content {
-  display: grid;
-  grid-template-columns: minmax(50%, 100%) minmax(50%, 100%);
+  flex-wrap: wrap;
+  overflow: hidden;
+  display: flex;
   border: 1px solid #000;
 }
 .new-page-content div {
+  max-height: 100%;
   background-size: cover;
 }
+.new-page-content div img {
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 100%;
+}
+.new-page-content .buttonToAddImg {
+  position: absolute;
+  top: 15mm;
+  z-index: 1;
+}
+
 @media print {
   html,
   body {
@@ -404,7 +438,9 @@ footer {
   button {
     display: none;
   }
-  .other {
+  .other,
+  .size-button,
+  .remove-button {
     display: none;
   }
 }/*# sourceMappingURL=style.css.map */

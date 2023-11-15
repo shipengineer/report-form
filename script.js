@@ -51,6 +51,8 @@ const instrumets = {
   ],
   year: 2023,
 };
+document.getElementById("report-date").valueAsDate = new Date();
+document.getElementById("sign-date").valueAsDate = new Date();
 const picsInPages = {};
 function render() {
   {
@@ -64,7 +66,7 @@ function render() {
       newOption.textContent = element["instrument-name"];
       instrumentsDatalist.append(newOption);
     });
-    console.log(iInstruments);
+
     const year = document.querySelector("#year");
     year.textContent = iData.year;
     const table = document.querySelector(".instruments");
@@ -79,9 +81,7 @@ function render() {
       });
       const tdOfRequiredInstrument = target.parentNode;
       const tdSiblingNumber = tdOfRequiredInstrument.nextSibling.nextSibling;
-      console.log(tdSiblingNumber);
       const SiblingSiblingCertificate = tdSiblingNumber.nextSibling.nextSibling;
-      console.log(SiblingSiblingCertificate);
       tdSiblingNumber.textContent = requiredInstrument["instrument-number"];
       SiblingSiblingCertificate.textContent =
         requiredInstrument["instrument-certificate"];
@@ -152,27 +152,41 @@ function addNewPage() {
   );
   const allPagesCount = document.querySelectorAll(".bottom-title");
   allPagesCount.forEach((elem, i) => {
-    console.log(pageCounter);
     elem.textContent = "Лист " + (i + 1) + " из " + pageCounter;
   });
   const newContent = document.getElementById(`${pageCounter}`);
   newContent.addEventListener("click", (e) => {
-    console.log(e.target.tagName);
-    if (e.target.tagName === "BUTTON") {
+    if (
+      e.target.tagName === "BUTTON" &&
+      e.target.classList.contains("buttonToAddImg")
+    ) {
       picsInPages[`${pageCounter}`].push(
         picsInPages[`${pageCounter}`].length + 1
       );
 
       const section = e.currentTarget;
-      console.log(section);
-      console.log(picsInPages);
+
       section.insertAdjacentHTML(
         "beforeend",
         ` <div  id='img#${pageCounter}-${
           picsInPages[`${pageCounter}`][
             picsInPages[`${pageCounter}`].length - 1
           ]
-        }' class ="report-images"  ></div>
+        }' class ="report-images"  >
+        <img />
+        <button style="left:1090px; top:${
+          picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+          ] * 125
+        }px"  class ="remove-button">удалить изображение</button>
+        <input style="left:1090px; top:${
+          picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+          ] *
+            125 +
+          50
+        }px" type="range" min = "0" max = "100" step ="1" class='size-button' value="100">
+        </div>
       <input type="file" name="newImg" id="${pageCounter}-${
           picsInPages[`${pageCounter}`][
             picsInPages[`${pageCounter}`].length - 1
@@ -180,6 +194,7 @@ function addNewPage() {
         }" accept="image/*" >
     `
       );
+
       const newInput = document.getElementById(
         `${pageCounter}-${
           picsInPages[`${pageCounter}`][
@@ -196,7 +211,7 @@ function addNewPage() {
       );
       newInput.addEventListener("change", (e) => {
         const target = e.target;
-        console.log(target);
+
         if (!FileReader) {
           alert("FileReader не поддерживается — облом");
           return;
@@ -209,14 +224,30 @@ function addNewPage() {
 
         const fileReader = new FileReader();
         fileReader.onload = function () {
-          newImg.style = `background-image:url('${fileReader.result}'); background-size:contain; background-repeat:no-repeat`;
+          newImg.childNodes[1].src = `${fileReader.result}`;
+          // newImg.style = `background-image:url('${fileReader.result}'); background-size:contain; background-repeat:no-repeat`;
         };
-        console.log(newImg);
+
         fileReader.readAsDataURL(target.files[0]);
         target.style = "display:none";
       });
     }
   });
+  newContent.addEventListener("input", (e) => {
+    if (e.target.tagName === "INPUT") {
+      e.target.parentNode.style = `width:${e.target.value}%`;
+    }
+  });
 }
+document.addEventListener("click", (e) => {
+  if (
+    e.target.tagName === "BUTTON" &&
+    e.target.classList.contains("remove-button")
+  ) {
+    // console.log(e.target.parentNode);
+    e.target.parentNode.nextSibling.nextSibling.remove();
+    e.target.parentNode.remove();
+  }
+});
 function FR() {}
 // newImg.addEventListener("change", FR);
