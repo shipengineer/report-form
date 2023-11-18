@@ -236,10 +236,42 @@ function addNewPage() {
   });
   newContent.addEventListener("input", (e) => {
     if (e.target.tagName === "INPUT") {
-      e.target.parentNode.style = `width:${e.target.value}%`;
+      const img = e.target.parentNode.querySelector("img");
+      img.style.width = `${e.target.value}%`;
     }
   });
 }
+
+document.addEventListener("mousedown", (e) => {
+  const img = e.target;
+  const divImg = e.target.parentNode;
+  const pageHeight = 400;
+  if (img.tagName === "IMG") {
+    img.style.position = "absolute";
+    moveAt(e.pageX, e.pageY - pageCounter * pageHeight);
+
+    function moveAt(pageX, pageY) {
+      img.style.left = pageX - img.offsetWidth / 2 + "px";
+      img.style.top = pageY - img.offsetHeight / 2 + "px";
+    }
+    // function onMouseMove(e){
+    //   moveAt(e.pageX,e.pageY- pageCounter * pageHeight);
+
+    // }
+    document.addEventListener("mousemove", moveImg);
+    function moveImg(e) {
+      moveAt(e.pageX, e.pageY - pageCounter * pageHeight);
+    }
+    img.onmouseup = function () {
+      document.removeEventListener("mousemove", moveImg);
+      img.onmouseup = null;
+    };
+    img.ondragstart = function () {
+      return false;
+    };
+  }
+});
+
 document.addEventListener("click", (e) => {
   if (
     e.target.tagName === "BUTTON" &&
