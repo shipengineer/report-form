@@ -174,12 +174,17 @@ function addNewPage() {
             picsInPages[`${pageCounter}`].length - 1
           ]
         }' class ="report-images"  >
-        <img />
+        <img style ="rotate:0deg" />
         <button style="left:1090px; top:${
           picsInPages[`${pageCounter}`][
             picsInPages[`${pageCounter}`].length - 1
           ] * 125
         }px"  class ="remove-button">удалить изображение</button>
+        <button style="left:1190px; top:${
+          picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+          ] * 125
+        }px" class = "rotate-button">повернуть</button> 
         <input style="left:1090px; top:${
           picsInPages[`${pageCounter}`][
             picsInPages[`${pageCounter}`].length - 1
@@ -291,6 +296,20 @@ document.addEventListener("click", (e) => {
     allPagesCount.forEach((elem, i) => {
       elem.textContent = "Лист " + (i + 1) + " из " + pageCounter;
     });
+  }
+  if (
+    e.target.tagName === "BUTTON" &&
+    e.target.classList.contains("rotate-button")
+  ) {
+    const img = e.target.parentNode.querySelector("img");
+    console.log(img.style.rotate.slice(0, -3));
+    const newtDeg = parseInt(img.style.rotate.slice(0, -3)) + 90;
+    console.log(newtDeg);
+    img.style.rotate = `${newtDeg}deg`;
+    // if (img.style.rotate !== ""){
+    //   img.style.rotate = `${img.style.rotate + 90}deg`;else{
+
+    //   }
   }
 });
 function FR() {}

@@ -45,9 +45,15 @@ body {
     // display: none;
     width: 200px;
   }
+  & .rotate-button {
+    z-index: 1;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
 }
-.report-images:has(.size-button:hover),
-.report-images:has(.remove-button:hover) {
+.report-images:has(.size-button:hover) > img,
+.report-images:has(.remove-button:hover) > img {
   border: 3px dotted red;
 }
 

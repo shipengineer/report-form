@@ -40,9 +40,15 @@ body .main_page .bottom-title, body .new-page .bottom-title {
   left: 10px;
   width: 200px;
 }
+.report-images .rotate-button {
+  z-index: 1;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 
-.report-images:has(.size-button:hover),
-.report-images:has(.remove-button:hover) {
+.report-images:has(.size-button:hover) > img,
+.report-images:has(.remove-button:hover) > img {
   border: 3px dotted red;
 }
 
