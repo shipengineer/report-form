@@ -13,6 +13,7 @@ body {
   flex-direction: column;
 }
 body textarea {
+  border-top: 1px solid #000;
   padding: 10px;
 }
 body .main_page, body .new-page {
@@ -73,6 +74,10 @@ select {
   -moz-appearance: none;
   appearance: none;
   text-align: center;
+}
+
+#stage-select {
+  padding: 0 5px;
 }
 
 .measure-date-other {
@@ -139,7 +144,7 @@ header #receipt-number {
 }
 header .snsz-logo {
   padding-left: 2px;
-  border-left: 2px solid #000;
+  font-weight: bold;
 }
 
 .main {
@@ -163,7 +168,7 @@ header .snsz-logo {
   border: 2px solid #000;
 }
 .order > *:nth-child(2n) {
-  width: 70%;
+  width: 100%;
   justify-self: start;
   text-align: left;
 }
@@ -244,21 +249,27 @@ header .snsz-logo {
 }
 
 .remarks {
-  margin-top: 5px;
+  width: 100%;
   border: 2px solid #000;
+  border-top: none;
+  display: flex;
+  flex-direction: row;
+}
+.remarks div {
+  flex: 0 1 50%;
   display: flex;
   flex-direction: column;
 }
-.remarks span {
+.remarks div span {
   width: 100%;
   font-weight: bold;
   text-align: center;
-  border-bottom: 2px solid #000;
 }
-.remarks #remarks {
-  height: 150px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
+.remarks div span:first-child {
+  border-right: 1px solid #000;
+}
+.remarks div textarea {
+  height: 175px;
 }
 
 .summary {
