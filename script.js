@@ -250,24 +250,32 @@ function addNewPage() {
 document.addEventListener("mousedown", (e) => {
   const img = e.target;
   const divImg = e.target.parentNode;
-  const pageHeight = 400;
+  const mainPage = document.querySelector(".main_page");
+  const mainPageHeight = window.getComputedStyle(mainPage, null);
+  const mainPageHeightNumber = parseInt(mainPageHeight.height.slice(0, -2));
+  console.log(mainPageHeight.height);
   if (img.tagName === "IMG") {
+    const divId = e.target.parentNode.id;
+    console.log(divId[4]);
+    const prevPageCounter = pageCounter;
+    pageCounter = parseInt(divId[4]);
     img.style.position = "absolute";
-    moveAt(e.pageX, e.pageY - pageCounter * pageHeight);
+    moveAt(e.pageX, e.pageY - mainPageHeightNumber * pageCounter);
 
     function moveAt(pageX, pageY) {
       img.style.left = pageX - img.offsetWidth / 2 + "px";
       img.style.top = pageY - img.offsetHeight / 2 + "px";
     }
     // function onMouseMove(e){
-    //   moveAt(e.pageX,e.pageY- pageCounter * pageHeight);
+    //   moveAt(e.pageX,e.pageY-  pageHeight);
 
     // }
     document.addEventListener("mousemove", moveImg);
     function moveImg(e) {
-      moveAt(e.pageX, e.pageY - pageCounter * pageHeight);
+      moveAt(e.pageX, e.pageY - mainPageHeightNumber * (pageCounter - 1));
     }
     img.onmouseup = function () {
+      pageCounter = prevPageCounter;
       document.removeEventListener("mousemove", moveImg);
       img.onmouseup = null;
     };
