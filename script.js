@@ -2,128 +2,128 @@ const instrumets = {
   instruments: [
     {
       id: 1,
-      "instrument-name": "Лазерный трекер API Radian Plus R-80",
-      "instrument-number": "70681",
-      "instrument-certificate": "С-М/19-12-2022/211174153",
+      'instrument-name': 'Лазерный трекер API Radian Plus R-80',
+      'instrument-number': '70681',
+      'instrument-certificate': 'С-М/19-12-2022/211174153',
     },
     {
       id: 2,
-      "instrument-name": "Сканер лазерный Leica RTC360",
-      "instrument-number": "2984274",
-      "instrument-certificate": "С-ДЭМ/19-09-2023/279399049",
+      'instrument-name': 'Сканер лазерный Leica RTC360',
+      'instrument-number': '2984274',
+      'instrument-certificate': 'С-ДЭМ/19-09-2023/279399049',
     },
     {
       id: 3,
-      "instrument-name": "Тахеометр Leica TS60 I",
-      "instrument-number": "890213",
-      "instrument-certificate": "С-Т/14-12-2022/208731450",
+      'instrument-name': 'Тахеометр Leica TS60 I',
+      'instrument-number': '890213',
+      'instrument-certificate': 'С-Т/14-12-2022/208731450',
     },
     {
       id: 4,
-      "instrument-name": "Тахеометр Sokkia NET1AXII",
-      "instrument-number": " КН0569",
-      "instrument-certificate": "С-ДЭМ/30-08-2023/274062460",
+      'instrument-name': 'Тахеометр Sokkia NET1AXII',
+      'instrument-number': ' КН0569',
+      'instrument-certificate': 'С-ДЭМ/30-08-2023/274062460',
     },
     {
       id: 5,
-      "instrument-name": "Тахеометр SOUTH N3",
-      "instrument-number": "287748",
-      "instrument-certificate": "С-ДЭМ/02-12-2022/205769401",
+      'instrument-name': 'Тахеометр SOUTH N3',
+      'instrument-number': '287748',
+      'instrument-certificate': 'С-ДЭМ/02-12-2022/205769401',
     },
     {
       id: 6,
-      "instrument-name": "Нивелир Leica NA324 ",
-      "instrument-number": "941324337937",
-      "instrument-certificate": "С-ДЭМ/30-08-2023/274062459",
+      'instrument-name': 'Нивелир Leica NA324 ',
+      'instrument-number': '941324337937',
+      'instrument-certificate': 'С-ДЭМ/30-08-2023/274062459',
     },
     {
       id: 7,
-      "instrument-name": "Лазерный дальномер Leica DISTO X3",
-      "instrument-number": "1610930131",
-      "instrument-certificate": "С-EBE/26-09-2022/188789417",
+      'instrument-name': 'Лазерный дальномер Leica DISTO X3',
+      'instrument-number': '1610930131',
+      'instrument-certificate': 'С-EBE/26-09-2022/188789417',
     },
     {
       id: 8,
-      "instrument-name": "Рейка нивелирная RGK TS-5",
-      "instrument-number": "STS50003",
-      "instrument-certificate": "С-СП/21-03-2023/232461132",
+      'instrument-name': 'Рейка нивелирная RGK TS-5',
+      'instrument-number': 'STS50003',
+      'instrument-certificate': 'С-СП/21-03-2023/232461132',
     },
   ],
   year: 2023,
 };
-document.getElementById("report-date").valueAsDate = new Date();
-document.getElementById("sign-date").valueAsDate = new Date();
+document.getElementById('report-date').valueAsDate = new Date();
+document.getElementById('sign-date').valueAsDate = new Date();
 const picsInPages = {};
 function render() {
   {
     // let responce = await fetch("./data.json");
     let iData = instrumets;
 
-    const instrumentsDatalist = document.querySelector("#instruments");
+    const instrumentsDatalist = document.querySelector('#instruments');
     const iInstruments = iData.instruments;
     iInstruments.forEach((element) => {
-      const newOption = document.createElement("option");
-      newOption.textContent = element["instrument-name"];
+      const newOption = document.createElement('option');
+      newOption.textContent = element['instrument-name'];
       instrumentsDatalist.append(newOption);
     });
 
-    const year = document.querySelector("#year");
+    const year = document.querySelector('#year');
     year.textContent = iData.year;
-    const table = document.querySelector(".instruments");
+    const table = document.querySelector('.instruments');
     let requiredInstrument;
-    table.addEventListener("change", (e) => {
+    table.addEventListener('change', (e) => {
       requiredInstrument = null;
       const target = e.target;
       iInstruments.map((elem) => {
-        if (elem["instrument-name"] === target.value) {
+        if (elem['instrument-name'] === target.value) {
           requiredInstrument = elem;
         }
       });
       const tdOfRequiredInstrument = target.parentNode;
       const tdSiblingNumber = tdOfRequiredInstrument.nextSibling.nextSibling;
       const SiblingSiblingCertificate = tdSiblingNumber.nextSibling.nextSibling;
-      tdSiblingNumber.textContent = requiredInstrument["instrument-number"];
+      tdSiblingNumber.textContent = requiredInstrument['instrument-number'];
       SiblingSiblingCertificate.textContent =
-        requiredInstrument["instrument-certificate"];
+        requiredInstrument['instrument-certificate'];
     });
   }
 }
 render();
 
 // _________________________________________________________________________
-const check_1 = document.querySelector("#full-measure");
-const check_2 = document.querySelector("#acceptance");
-const check_3 = document.querySelector("#to-correct-required");
-document.querySelector(".check-boxes").addEventListener("change", (e) => {
+const check_1 = document.querySelector('#full-measure');
+const check_2 = document.querySelector('#acceptance');
+const check_3 = document.querySelector('#to-correct-required');
+document.querySelector('.check-boxes').addEventListener('change', (e) => {
   const target = e.target;
   if (target.checked === true) {
-    target.parentNode.setAttribute("style", "text-decoration:none");
+    target.parentNode.setAttribute('style', 'text-decoration:none');
   } else {
-    target.parentNode.setAttribute("style", "text-decoration:line-through 2px");
+    target.parentNode.setAttribute('style', 'text-decoration:line-through 2px');
   }
 });
 // _________________________________________________________________________
-const superOrder = document.querySelector("#super-order");
-const superOrderNumber = document.querySelector("#super-order-number");
-superOrderNumber.addEventListener("input", (e) => {
+const superOrder = document.querySelector('#super-order');
+const superOrderNumber = document.querySelector('#super-order-number');
+superOrderNumber.addEventListener('input', (e) => {
   superOrder.value = superOrderNumber.value;
 });
 // _________________________________________________________________________
-const other = document.querySelector("#other");
-const otherText = document.querySelector("#other-text");
+const other = document.querySelector('#other');
+const otherText = document.querySelector('#other-text');
 
 // _________________________________________________________________________
 let pageCounter = 1;
 let totalPages = 1;
-const bodyTag = document.querySelector("body");
-const reportDate = document.querySelector("#report-date");
-const orderDescription = document.querySelector("#order-object");
-const reportID = document.querySelector("#report-number");
+const bodyTag = document.querySelector('body');
+const reportDate = document.querySelector('#report-date');
+const orderDescription = document.querySelector('#order-object');
+const reportID = document.querySelector('#report-number');
 function addNewPage() {
   pageCounter++;
   picsInPages[`${pageCounter}`] = [];
   bodyTag.insertAdjacentHTML(
-    "beforeend",
+    'beforeend',
 
     `<p id = "page#${pageCounter}" style="display:none">${pageCounter}<p>
     <section class="new-page" >
@@ -151,15 +151,15 @@ function addNewPage() {
       </section>
      `
   );
-  const allPagesCount = document.querySelectorAll(".bottom-title");
+  const allPagesCount = document.querySelectorAll('.bottom-title');
   allPagesCount.forEach((elem, i) => {
-    elem.textContent = "Лист " + (i + 1) + " из " + pageCounter;
+    elem.textContent = 'Лист ' + (i + 1) + ' из ' + pageCounter;
   });
   const newContent = document.getElementById(`${pageCounter}`);
-  newContent.addEventListener("click", (e) => {
+  newContent.addEventListener('click', (e) => {
     if (
-      e.target.tagName === "BUTTON" &&
-      e.target.classList.contains("buttonToAddImg")
+      e.target.tagName === 'BUTTON' &&
+      e.target.classList.contains('buttonToAddImg')
     ) {
       picsInPages[`${pageCounter}`].push(
         picsInPages[`${pageCounter}`].length + 1
@@ -168,7 +168,7 @@ function addNewPage() {
       const section = e.currentTarget;
 
       section.insertAdjacentHTML(
-        "beforeend",
+        'beforeend',
         ` <div  id='img#${pageCounter}-${
           picsInPages[`${pageCounter}`][
             picsInPages[`${pageCounter}`].length - 1
@@ -215,16 +215,16 @@ function addNewPage() {
           ]
         }`
       );
-      newInput.addEventListener("change", (e) => {
+      newInput.addEventListener('change', (e) => {
         const target = e.target;
 
         if (!FileReader) {
-          alert("FileReader не поддерживается — облом");
+          alert('FileReader не поддерживается — облом');
           return;
         }
 
         if (!target.files.length) {
-          alert("Ничего не загружено");
+          alert('Ничего не загружено');
           return;
         }
 
@@ -235,49 +235,52 @@ function addNewPage() {
         };
 
         fileReader.readAsDataURL(target.files[0]);
-        target.style = "display:none";
+        target.style = 'display:none';
       });
     }
   });
-  newContent.addEventListener("input", (e) => {
-    if (e.target.tagName === "INPUT") {
-      const img = e.target.parentNode.querySelector("img");
+  newContent.addEventListener('input', (e) => {
+    if (e.target.tagName === 'INPUT') {
+      const img = e.target.parentNode.querySelector('img');
       img.style.width = `${e.target.value}%`;
     }
   });
 }
 
-document.addEventListener("mousedown", (e) => {
+document.addEventListener('mousedown', (e) => {
   const img = e.target;
   const divImg = e.target.parentNode;
-  const mainPage = document.querySelector(".main_page");
+  const mainPage = document.querySelector('.main_page');
   const mainPageHeight = window.getComputedStyle(mainPage, null);
   const mainPageHeightNumber = parseInt(mainPageHeight.height.slice(0, -2));
   console.log(mainPageHeight.height);
-  if (img.tagName === "IMG") {
-    const divId = e.target.parentNode.id;
+  if (img.tagName === 'IMG') {
+    const divId = e.target.parentNode.parentNode.id;
     console.log(divId[4]);
     const prevPageCounter = pageCounter;
-    pageCounter = parseInt(divId[4]);
-    img.style.position = "absolute";
+    pageCounter = parseInt(divId);
+    img.style.position = 'absolute';
     moveAt(e.pageX, e.pageY - mainPageHeightNumber * pageCounter);
 
     function moveAt(pageX, pageY) {
-      img.style.left = pageX - img.offsetWidth / 2 + "px";
-      img.style.top = pageY - img.offsetHeight / 2 + "px";
+      img.style.left = pageX - img.offsetWidth / 2 + 'px';
+      img.style.top = pageY - img.offsetHeight / 2 + 'px';
     }
     // function onMouseMove(e){
     //   moveAt(e.pageX,e.pageY-  pageHeight);
 
     // }
-    document.addEventListener("mousemove", moveImg);
+    document.addEventListener('mousemove', moveImg);
     function moveImg(e) {
       moveAt(e.pageX, e.pageY - mainPageHeightNumber * (pageCounter - 1));
     }
     img.onmouseup = function () {
       pageCounter = prevPageCounter;
-      document.removeEventListener("mousemove", moveImg);
+      document.removeEventListener('mousemove', moveImg);
       img.onmouseup = null;
+    };
+    img.oncontextmenu = () => {
+      false;
     };
     img.ondragstart = function () {
       return false;
@@ -285,31 +288,31 @@ document.addEventListener("mousedown", (e) => {
   }
 });
 
-document.addEventListener("click", (e) => {
+document.addEventListener('click', (e) => {
   if (
-    e.target.tagName === "BUTTON" &&
-    e.target.classList.contains("remove-button")
+    e.target.tagName === 'BUTTON' &&
+    e.target.classList.contains('remove-button')
   ) {
     // console.log(e.target.parentNode);
     e.target.parentNode.nextSibling.nextSibling.remove();
     e.target.parentNode.remove();
   }
   if (
-    e.target.tagName === "BUTTON" &&
-    e.target.classList.contains("remove-page-button")
+    e.target.tagName === 'BUTTON' &&
+    e.target.classList.contains('remove-page-button')
   ) {
     e.target.parentNode.remove();
     pageCounter--;
-    const allPagesCount = document.querySelectorAll(".bottom-title");
+    const allPagesCount = document.querySelectorAll('.bottom-title');
     allPagesCount.forEach((elem, i) => {
-      elem.textContent = "Лист " + (i + 1) + " из " + pageCounter;
+      elem.textContent = 'Лист ' + (i + 1) + ' из ' + pageCounter;
     });
   }
   if (
-    e.target.tagName === "BUTTON" &&
-    e.target.classList.contains("rotate-button")
+    e.target.tagName === 'BUTTON' &&
+    e.target.classList.contains('rotate-button')
   ) {
-    const img = e.target.parentNode.querySelector("img");
+    const img = e.target.parentNode.querySelector('img');
     console.log(img.style.rotate.slice(0, -3));
     const newtDeg = parseInt(img.style.rotate.slice(0, -3)) + 90;
     console.log(newtDeg);
