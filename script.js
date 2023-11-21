@@ -308,7 +308,7 @@ document.addEventListener("mousedown", (e) => {
   function moveImg(e) {
     moveAt(e.pageX, e.pageY - mainPageHeightNumber * (pageCounter - 1));
   }
-  img.onmouseup = function () {
+  document.onmouseup = function () {
     pageCounter = prevPageCounter;
     document.removeEventListener("mousemove", moveImg);
     img.onmouseup = null;
