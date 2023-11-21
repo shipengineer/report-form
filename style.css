@@ -4,6 +4,24 @@
   padding: 0;
 }
 
+*:required {
+  background-color: pink;
+}
+
+#add-page {
+  z-index: 2;
+  position: absolute;
+  position: sticky;
+  top: 10px;
+  width: 150px;
+  background-color: darkorange;
+}
+
+#refresh-page {
+  width: 150px;
+  background-color: pink;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
@@ -496,5 +514,8 @@ footer {
   .size-button,
   .remove-button {
     display: none;
+  }
+  :required {
+    background-color: #fff;
   }
 }/*# sourceMappingURL=style.css.map */

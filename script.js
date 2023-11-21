@@ -116,9 +116,10 @@ const otherText = document.querySelector("#other-text");
 let pageCounter = 1;
 let totalPages = 1;
 const bodyTag = document.querySelector("body");
-const reportDate = document.querySelector("#report-date");
-const orderDescription = document.querySelector("#order-object");
-const reportID = document.querySelector("#report-number");
+const reportDate = document.getElementById("report-date");
+const orderDescription = document.getElementById("order-object");
+console.log(orderDescription);
+const reportID = document.getElementById("report-number");
 function addNewPage() {
   pageCounter++;
   picsInPages[`${pageCounter}`] = [];
@@ -133,8 +134,12 @@ function addNewPage() {
           ОТЧЕТ О РЕЗУЛЬТАТАХ КОНТРОЛЯ ГЕОМЕТРИЧЕСКОЙ ФОРМЫ
         </p>
         <div class="new-page-header-section">
-          <span class="new-page-header-section-id">Отчет № ${reportID.value}-${superOrderNumber.value}-${year.textContent}</span>
-          <span class="new-page-header-section-date"> от ${reportDate.value} </span>
+          <span class="new-page-header-section-id">Отчет № ${reportID.value}-${
+      superOrderNumber.value
+    }-${year.textContent}</span>
+          <span class="new-page-header-section-date"> от ${reportDate.valueAsDate
+            .toLocaleString("ru")
+            .slice(0, 10)} </span>
 
           <span class="new-page-header-section-order--number">
             Заказ № ${superOrderNumber.value} </span
@@ -246,7 +251,32 @@ function addNewPage() {
     }
   });
 }
+function refreshReport() {
+  const IDs = document.querySelectorAll(".new-page-header-section-id");
+  const date = document.querySelectorAll(".new-page-header-section-date");
+  const orderNumber = document.querySelectorAll(
+    ".new-page-header-section-order--number"
+  );
+  const orderObject = document.querySelectorAll(
+    ".new-page-header-section-order--description"
+  );
 
+  IDs.forEach((id) => {
+    id.textContent = `Отчет № ${reportID.value}-${superOrderNumber.value}-${year.textContent}`;
+  });
+  date.forEach((date) => {
+    date.textContent = ` от ${reportDate.valueAsDate
+      .toLocaleString("ru")
+      .slice(0, 10)} `;
+  });
+  orderNumber.forEach((on) => {
+    on.textContent = `Заказ № ${superOrderNumber.value} `;
+  });
+
+  orderObject.forEach((oO) => {
+    oO.textContent = `${orderDescription.value}`;
+  });
+}
 document.addEventListener("mousedown", (e) => {
   const img = e.target;
   const divImg = e.target.parentNode;

@@ -21,25 +21,37 @@
               name="report-number"
               id="report-number"
               pattern="\d*"
+              required
             />-<input
               type="text"
               name="super-order-number"
               id="super-order-number"
+              required
             />-<span id="year"></span>
           </p>
-          <p>от <input type="date" name="report-date" id="report-date" /></p>
+          <p>
+            от
+            <input type="date" name="report-date" id="report-date" required />
+          </p>
           <div class="snsz-logo">АО "СНСЗ"</div>
         </div>
         <div>
           <p>
             ОСНОВАНИЕ заявка №
-            <input type="text" name="order-number" id="order-number" /> от
-            <input type="date" name="order-date" id="order-date" />
+            <input type="text" name="order-number" id="order-number" required />
+            от
+            <input type="date" name="order-date" id="order-date" required />
           </p>
           <p>
             Приложение к уведомлению №
-            <input type="text" name="receipt-number" id="receipt-number" /> от
-            <input type="date" name="receipt-date" id="receipt-date" />
+            <input
+              type="text"
+              name="receipt-number"
+              id="receipt-number"
+              required
+            />
+            от
+            <input type="date" name="receipt-date" id="receipt-date" required />
           </p>
         </div>
       </header>
@@ -48,12 +60,18 @@
           <div class="order">
             <p>Заказ №<input type="text" id="super-order" value="9999" /></p>
             <p id="object">
-              Объект <input type="text" name="order-object" id="order-object" />
+              Объект
+              <input
+                type="text"
+                name="order-object"
+                id="order-object"
+                required
+              />
             </p>
             <p>
               <span>Этап измерений</span>
 
-              <select id="stage-select">
+              <select id="stage-select" required>
                 <option value="others">Другое</option>
                 <option value="before-welding-itself">Перед сваркой</option>
                 <option value="after-welding-itself">После сварки</option>
@@ -68,11 +86,21 @@
             <textarea type="text" name="other-text" id="other-text"></textarea>
             <p class="measure-date-other">
               Дата проведения измерений
-              <input type="date" name="measure-date" id="measure-date" />
+              <input
+                type="date"
+                name="measure-date"
+                id="measure-date"
+                required
+              />
             </p>
             <p>
               Место измерений
-              <input type="text" name="measure-place" id="measure-place" />
+              <input
+                type="text"
+                name="measure-place"
+                id="measure-place"
+                required
+              />
             </p>
           </div>
           <div class="sources">
@@ -282,5 +310,8 @@
       <div class="bottom-title"></div>
     </section>
     <button id="add-page" onClick="addNewPage()">Добавить страницу</button>
+    <button id="refresh-page" onClick="refreshReport()">
+      Обновление отчета
+    </button>
   </body>
 </html>
