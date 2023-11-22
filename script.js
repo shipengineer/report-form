@@ -51,8 +51,8 @@ const instrumets = {
   ],
   year: 2023,
 };
-document.getElementById("report-date").valueAsDate = new Date();
-document.getElementById("sign-date").valueAsDate = new Date();
+document.getElementById("report-date").value = new Date();
+document.getElementById("sign-date").value = new Date();
 const picsInPages = {};
 function render() {
   {
@@ -68,19 +68,20 @@ function render() {
     document.getElementById("super-order").value = store.dataset.reportNumber
       ? store.dataset.superOrderNumber
       : "";
+    console.log(store.dataset.reportDate);
     document.getElementById("report-date").value = store.dataset.reportNumber
       ? store.dataset.reportDate
       : "";
     document.getElementById("order-number").value = store.dataset.reportNumber
       ? store.dataset.orderNumber
       : "";
-    document.getElementById("order-date").value = store.dataset.reportNumber
+    document.getElementById("order-date").value = store.dataset.orderDate
       ? store.dataset.orderDate
       : "";
     document.getElementById("receipt-number").value = store.dataset.reportNumber
       ? store.dataset.receiptNumber
       : "";
-    document.getElementById("receipt-date").value = store.dataset.reportNumber
+    document.getElementById("receipt-date").value = store.dataset.receiptDate
       ? store.dataset.receiptDate
       : "";
     document.getElementById("order-object").value = store.dataset.reportNumber
@@ -95,7 +96,7 @@ function render() {
     document.getElementById("measure-place").value = store.dataset.reportNumber
       ? store.dataset.measurePlace
       : "";
-    document.getElementById("measure-date").value = store.dataset.reportNumber
+    document.getElementById("measure-date").value = store.dataset.measureDate
       ? store.dataset.measureDate
       : "";
 
@@ -145,6 +146,10 @@ function render() {
     document.getElementById("chief-person").value = store.dataset.reportNumber
       ? store.dataset.chiefPerson
       : "";
+    document.getElementById("sign-date").value = store.dataset.signDate
+      ? store.dataset.signDate
+      : new Date().;
+
     //--------------------------------------------------------------
     // let responce = await fetch("./data.json");
     let iData = instrumets;
@@ -485,4 +490,5 @@ function saveReport() {
   ).value;
   store.dataset.creater = document.getElementById("creater").value;
   store.dataset.chiefPerson = document.getElementById("chief-person").value;
+  store.dataset.signDate = document.getElementById("sign-date").value;
 }

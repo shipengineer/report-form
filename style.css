@@ -18,8 +18,18 @@
 }
 
 #refresh-page {
+  position: absolute;
+  top: 792px;
+  left: 400px;
   width: 150px;
   background-color: pink;
+}
+
+#save-button {
+  position: absolute;
+  top: 792px;
+  left: 250px;
+  background-color: chartreuse;
 }
 
 body {
