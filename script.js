@@ -56,16 +56,110 @@ document.getElementById("sign-date").valueAsDate = new Date();
 const picsInPages = {};
 function render() {
   {
+    //--------------------------------------------------------------
+    document.getElementById("report-number").value = store.dataset.reportNumber
+      ? store.dataset.reportNumber
+      : "";
+
+    document.getElementById("super-order-number").value = store.dataset
+      .reportNumber
+      ? store.dataset.superOrderNumber
+      : "";
+    document.getElementById("super-order").value = store.dataset.reportNumber
+      ? store.dataset.superOrderNumber
+      : "";
+    document.getElementById("report-date").value = store.dataset.reportNumber
+      ? store.dataset.reportDate
+      : "";
+    document.getElementById("order-number").value = store.dataset.reportNumber
+      ? store.dataset.orderNumber
+      : "";
+    document.getElementById("order-date").value = store.dataset.reportNumber
+      ? store.dataset.orderDate
+      : "";
+    document.getElementById("receipt-number").value = store.dataset.reportNumber
+      ? store.dataset.receiptNumber
+      : "";
+    document.getElementById("receipt-date").value = store.dataset.reportNumber
+      ? store.dataset.receiptDate
+      : "";
+    document.getElementById("order-object").value = store.dataset.reportNumber
+      ? store.dataset.orderObject
+      : "";
+    document.getElementById("stage-select").value = store.dataset.reportNumber
+      ? store.dataset.stage
+      : "";
+    document.getElementById("other-text").value = store.dataset.reportNumber
+      ? store.dataset.otherText
+      : "";
+    document.getElementById("measure-place").value = store.dataset.reportNumber
+      ? store.dataset.measurePlace
+      : "";
+    document.getElementById("measure-date").value = store.dataset.reportNumber
+      ? store.dataset.measureDate
+      : "";
+
+    document.getElementById("first-sorce").value = store.dataset.reportNumber
+      ? store.dataset.firstSource
+      : "";
+    document.getElementById("second-sorce").value = store.dataset.reportNumber
+      ? store.dataset.secondSource
+      : "";
+    document.getElementById("third-sorce").value = store.dataset.reportNumber
+      ? store.dataset.thirdSource
+      : "";
+
+    document.getElementById("first-instrument").value = store.dataset
+      .reportNumber
+      ? store.dataset.firstInstrument
+      : "";
+
+    document.getElementById("second-instrument").value = store.dataset
+      .reportNumber
+      ? store.dataset.secondInstrument
+      : "";
+
+    document.getElementById("third-instrument").value = store.dataset
+      .reportNumber
+      ? store.dataset.thirdInstrument
+      : "";
+    document.getElementById("conclusion").value = store.dataset.reportNumber
+      ? store.dataset.conclusion
+      : "";
+    document.getElementById("remarks").value = store.dataset.reportNumber
+      ? store.dataset.remarks
+      : "";
+    document.getElementById("full-measure").value = store.dataset.reportNumber
+      ? store.dataset.fullMeashure
+      : "";
+    document.getElementById("acceptance").value = store.dataset.reportNumber
+      ? store.dataset.acceptance
+      : "";
+    document.getElementById("to-correct-required").value = store.dataset
+      .reportNumber
+      ? store.dataset.toCorrectrequired
+      : "";
+    document.getElementById("creater").value = store.dataset.reportNumber
+      ? store.dataset.creater
+      : "";
+    document.getElementById("chief-person").value = store.dataset.reportNumber
+      ? store.dataset.chiefPerson
+      : "";
+    //--------------------------------------------------------------
     // let responce = await fetch("./data.json");
     let iData = instrumets;
 
     const instrumentsDatalist = document.querySelector("#instruments");
     const iInstruments = iData.instruments;
-    iInstruments.forEach((element) => {
-      const newOption = document.createElement("option");
-      newOption.textContent = element["instrument-name"];
-      instrumentsDatalist.append(newOption);
-    });
+    console.log(instrumentsDatalist.childNodes);
+    if (instrumentsDatalist.childNodes.length === 1) {
+      iInstruments.forEach((element) => {
+        const newOption = document.createElement("option");
+        newOption.textContent = element["instrument-name"];
+        instrumentsDatalist.append(newOption);
+      });
+    }
+    console.log(instrumentsDatalist.childNodes);
 
     const year = document.querySelector("#year");
     year.textContent = iData.year;
@@ -358,3 +452,37 @@ document.addEventListener("click", (e) => {
 });
 function FR() {}
 // newImg.addEventListener("change", FR);
+
+function saveReport() {
+  store.dataset.reportNumber = document.getElementById("report-number").value;
+  store.dataset.superOrderNumber =
+    document.getElementById("super-order-number").value;
+  store.dataset.reportDate = document.getElementById("report-date").value;
+  store.dataset.orderNumber = document.getElementById("order-number").value;
+  store.dataset.orderDate = document.getElementById("order-date").value;
+  store.dataset.receiptNumber = document.getElementById("receipt-number").value;
+  store.dataset.receiptDate = document.getElementById("receipt-date").value;
+  store.dataset.orderObject = document.getElementById("order-object").value;
+  store.dataset.stage = document.getElementById("stage-select").value;
+  store.dataset.otherText = document.getElementById("other-text").value;
+  store.dataset.measurePlace = document.getElementById("measure-place").value;
+  store.dataset.measureDate = document.getElementById("measure-date").value;
+  store.dataset.firstSource = document.getElementById("first-sorce").value;
+  store.dataset.secondSource = document.getElementById("second-sorce").value;
+  store.dataset.thirdSource = document.getElementById("third-sorce").value;
+  store.dataset.firstInstrument =
+    document.getElementById("first-instrument").value;
+  store.dataset.secondInstrument =
+    document.getElementById("second-instrument").value;
+  store.dataset.thirdInstrument =
+    document.getElementById("third-instrument").value;
+  store.dataset.conclusion = document.getElementById("conclusion").value;
+  store.dataset.remarks = document.getElementById("remarks").value;
+  store.dataset.fullMeashure = document.getElementById("full-measure").value;
+  store.dataset.acceptance = document.getElementById("acceptance").value;
+  store.dataset.toCorrectrequired = document.getElementById(
+    "to-correct-required"
+  ).value;
+  store.dataset.creater = document.getElementById("creater").value;
+  store.dataset.chiefPerson = document.getElementById("chief-person").value;
+}

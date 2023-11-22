@@ -10,6 +10,7 @@
   <script src="script.js" defer></script>
 
   <body>
+    <div id="store" style="display: none">Сохранность</div>
     <section class="main_page">
       <header>
         <div>
@@ -58,7 +59,7 @@
       <div class="main">
         <section class="main-section">
           <div class="order">
-            <p>Заказ №<input type="text" id="super-order" value="9999" /></p>
+            <p>Заказ №<input type="text" id="super-order" /></p>
             <p id="object">
               Объект
               <input
@@ -209,7 +210,7 @@
             </div>
             <footer>
               <p>
-                Составил<select>
+                Составил<select id="creater">
                   <option value="adzaharikov">Захариков А.Д.</option>
                   <option value="eakalchenko">Кальченко Е.А.</option>
                   <option value="avmysnik">Мысник А.В.</option>
@@ -227,7 +228,7 @@
             </footer>
             <div class="signature">
               <select>
-                <option value="chief" selected>Проверил</option>
+                <option value="chief" id="checker" selected>Проверил</option>
               </select>
               <div class="sign"></div>
               <select name="chief-person" id="chief-person">
@@ -313,5 +314,6 @@
     <button id="refresh-page" onClick="refreshReport()">
       Обновление отчета
     </button>
+    <button id="save-button" onclick="saveReport()">Сохранить отчет</button>
   </body>
 </html>
