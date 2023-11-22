@@ -4,11 +4,547 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Отчет геометрических характеристик</title>
-    <link rel="stylesheet" href="style.css" />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
   </head>
-  <script src="data.js"></script>
-  <script src="script.js" defer></script>
+  <!-- <script src="data.js"></script> -->
+  <!-- <script src="script.js" defer></script> -->
+  <style>
+    * {
+      margin: 0;
+      box-sizing: border-box;
+      padding: 0;
+    }
 
+    *:required {
+      background-color: pink;
+    }
+
+    #add-page {
+      z-index: 2;
+      position: absolute;
+      position: sticky;
+      top: 10px;
+      width: 150px;
+      background-color: darkorange;
+    }
+
+    #refresh-page {
+      position: absolute;
+      top: 792px;
+      left: 400px;
+      width: 150px;
+      background-color: pink;
+    }
+
+    #save-button {
+      position: absolute;
+      top: 792px;
+      left: 250px;
+      background-color: chartreuse;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      margin-left: 5mm;
+      width: 297mm;
+      display: flex;
+      flex-direction: column;
+    }
+    body textarea {
+      border-top: 1px solid #000;
+      padding: 10px;
+    }
+    body .main_page,
+    body .new-page {
+      padding: 20mm 10mm 0mm 10mm;
+      height: 210mm;
+    }
+    body .main_page .bottom-title,
+    body .new-page .bottom-title {
+      height: 10mm;
+      text-align: end;
+    }
+
+    .report-images .remove-button {
+      z-index: 1;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: -moz-fit-content;
+      width: fit-content;
+    }
+    .report-images .size-button {
+      z-index: 1;
+      position: absolute;
+      top: 50px;
+      left: 10px;
+      width: 200px;
+    }
+    .report-images .rotate-button {
+      z-index: 1;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    .report-images:has(.size-button:hover) > img,
+    .report-images:has(.remove-button:hover) > img {
+      border: 3px dotted red;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      text-align: center;
+      border: none;
+      border-bottom: 1px solid #000;
+      padding: 2px;
+    }
+
+    input {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+    }
+
+    #super-order {
+      width: 100px;
+    }
+
+    select {
+      border: none;
+      border-bottom: 1px solid #000;
+      height: 1rem;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      text-align: center;
+    }
+
+    #stage-select {
+      padding: 0 5px;
+    }
+
+    .measure-date-other {
+      justify-self: flex-start;
+      white-space: nowrap;
+    }
+
+    #measure-place {
+      width: 150px;
+    }
+
+    #object {
+      justify-self: flex-start;
+    }
+
+    #other-text {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      display: block;
+      justify-self: start;
+      grid-row: 3 / span 2;
+      grid-column: 2;
+      width: 100%;
+      height: 70px;
+      border: 2px solid #000;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    header {
+      padding: 5px 10px;
+      border: 2px solid #000;
+      display: flex;
+      flex-direction: column;
+    }
+    header > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 2px;
+    }
+    header > div:first-child {
+      border-bottom: 1px solid #000;
+    }
+    header > div > p:first-child {
+      margin-right: 5px;
+    }
+    header #report-number {
+      max-width: 50px;
+    }
+    header #super-order-number {
+      width: 50px;
+    }
+    header #order-number {
+      width: 40px;
+    }
+    header #order-date {
+      width: 100px;
+    }
+    header #receipt-number {
+      width: 40px;
+    }
+    header .snsz-logo {
+      padding-left: 2px;
+      font-weight: bold;
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 80% 20%;
+      border: 2px solid #000;
+      border-top: none;
+      padding: 2px;
+      width: 100%;
+    }
+
+    .order {
+      row-gap: 5px;
+      align-items: center;
+      justify-items: start;
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      grid-template-rows: 1fr 1fr;
+      margin-bottom: 5px;
+      padding: 10px;
+      border: 2px solid #000;
+    }
+    .order > *:nth-child(2n) {
+      width: 100%;
+      justify-self: start;
+      text-align: left;
+    }
+    .order #order-object {
+      width: 80%;
+    }
+
+    .sources {
+      border-right: 2px solid #000;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      grid-template-rows: 1fr;
+    }
+    .sources th {
+      border: 1px solid #000;
+    }
+    .sources table {
+      border: 1px solid #000;
+      border-right: none;
+    }
+
+    .instruments table,
+    .sources table {
+      font-size: 14px;
+      border-spacing: 0px;
+    }
+    .instruments .instruments-item input,
+    .sources .instruments-item input {
+      padding: 2px;
+      width: 100%;
+      border: none;
+      font-size: 14px;
+      text-align: center;
+    }
+    .instruments th,
+    .sources th {
+      white-space: nowrap;
+      width: 100%;
+      font-size: 14px;
+      padding: 5px;
+    }
+    .instruments th:first-child,
+    .sources th:first-child {
+      word-wrap: normal;
+    }
+    .instruments th:nth-child(2),
+    .sources th:nth-child(2) {
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+    .instruments td:nth-child(1),
+    .sources td:nth-child(1) {
+      word-wrap: normal;
+      border-right: 1px solid #000;
+      border-left: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+    .instruments td:nth-child(2),
+    .sources td:nth-child(2) {
+      white-space: nowrap;
+      border-bottom: 1px solid #000;
+    }
+    .instruments td:nth-child(3),
+    .sources td:nth-child(3) {
+      white-space: nowrap;
+      border-right: 1px solid #000;
+      border-left: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+    .instruments td,
+    .sources td {
+      padding: 0px 2px;
+      text-align: center;
+    }
+
+    .sources-table input {
+      border: none;
+    }
+
+    .remarks {
+      width: 100%;
+      border: 2px solid #000;
+      border-top: none;
+      display: flex;
+      flex-direction: row;
+    }
+    .remarks div {
+      flex: 0 1 50%;
+      display: flex;
+      flex-direction: column;
+    }
+    .remarks div span {
+      width: 100%;
+      font-weight: bold;
+      text-align: center;
+    }
+    .remarks div span:first-child {
+      border-right: 1px solid #000;
+    }
+    .remarks div textarea {
+      height: 175px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      grid-template-rows: 1.5rem 1fr;
+      height: -moz-fit-content;
+      height: fit-content;
+      border: 2px solid #000;
+      border-top: none;
+    }
+    .summary span {
+      font-weight: bold;
+      grid-column: 1/3;
+      text-align: center;
+      border: 1px solid #000;
+      border-top: none;
+    }
+    .summary .check-boxes {
+      grid-row: 2;
+      grid-column: 1/3;
+      width: 100%;
+      height: 4rem;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      font-size: 14px;
+    }
+    .summary .check-boxes label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .summary .check-boxes label:first-child {
+      margin-left: 10px;
+    }
+    .summary .check-boxes input {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+    }
+    .summary .check-boxes input + label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      border: 3px solid #000;
+    }
+    .summary .check-boxes input + label::before {
+      position: relative;
+      content: "";
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      flex-grow: 0;
+      margin-right: 0.5em;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 50% 50%;
+    }
+    .summary .check-boxes input:checked + label {
+      margin-right: 10px;
+      z-index: 1;
+      height: 20px;
+      border: none;
+    }
+    .summary .check-boxes input:checked + label::before,
+    .summary .check-boxes input:checked + label::after {
+      content: "";
+      position: absolute;
+      width: 24px;
+      height: 4px;
+      background: #000000;
+    }
+    .summary .check-boxes input:checked + label::before {
+      transform: rotate(45deg);
+      margin-left: 5px;
+    }
+    .summary .check-boxes input:checked + label::after {
+      transform: rotate(-45deg);
+    }
+    .summary .check-boxes #label_1,
+    .summary .check-boxes #label_2,
+    .summary .check-boxes #label_3 {
+      -webkit-text-decoration: line-through 2px;
+      text-decoration: line-through 2px;
+    }
+
+    .signature {
+      grid-row: 4;
+      grid-column: 2;
+      justify-content: end;
+      display: flex;
+      padding: 10px;
+    }
+    .signature .sign {
+      width: 200px;
+      height: 1rem;
+      border-bottom: 1px solid #000;
+    }
+
+    .resolution,
+    .resolve {
+      width: 100%;
+    }
+    .resolution div,
+    .resolve div {
+      text-align: center;
+      padding: 5px;
+      border: 1px solid #000;
+      background-color: #8d8d8d;
+    }
+    .resolution textarea,
+    .resolve textarea {
+      width: 100%;
+      height: 265px;
+    }
+    .resolution table,
+    .resolve table {
+      width: 100%;
+    }
+    .resolution th,
+    .resolve th {
+      border: 1px solid #000;
+      text-align: center;
+    }
+    .resolution td,
+    .resolve td {
+      text-align: center;
+      border: 1px solid #000;
+      height: 30px;
+    }
+    .resolution td:not(:first-child),
+    .resolve td:not(:first-child) {
+      width: 50px;
+    }
+
+    footer {
+      grid-column: 1/4;
+      padding: 5px 0 5px 10px;
+      grid-row: 3;
+      display: flex;
+      align-self: flex-end;
+    }
+
+    .new-page {
+      height: 210mm;
+      display: grid;
+      grid-template-rows: 12mm 168mm 10mm;
+      position: relative;
+    }
+    .new-page-header {
+      display: flex;
+    }
+    .new-page-header-title {
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      border: 1px solid #000;
+      white-space: nowrap;
+    }
+    .new-page-header-section {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    .new-page-header-section > span {
+      white-space: nowrap;
+      border: 1px solid #000;
+    }
+    .new-page-header-section-id,
+    .new-page-header-section-date {
+      padding: 2px 0.5rem;
+    }
+    .new-page-header-section-order--number {
+      padding: 2px 0.5rem;
+      flex-grow: 1;
+    }
+    .new-page-header-section-order--description {
+      width: 100%;
+      padding: 2px;
+    }
+    .new-page-content {
+      flex-wrap: wrap;
+      overflow: hidden;
+      display: flex;
+      border: 1px solid #000;
+    }
+    .new-page-content div {
+      max-height: 100%;
+      background-size: cover;
+    }
+    .new-page-content div img {
+      width: -moz-fit-content;
+      width: fit-content;
+      max-width: 100%;
+    }
+    .new-page-content .buttonToAddImg {
+      position: absolute;
+      top: 15mm;
+      z-index: 1;
+    }
+
+    @media print {
+      html,
+      body {
+        margin-left: 5px;
+        width: 297mm;
+      }
+      button {
+        display: none;
+      }
+      .other,
+      .size-button,
+      .remove-button {
+        display: none;
+      }
+      :required {
+        background-color: #fff;
+      }
+    } /*# sourceMappingURL=style.css.map */
+  </style>
   <body>
     <div id="store" style="display: none">Сохранность</div>
     <section class="main_page">
@@ -316,4 +852,509 @@
     </button>
     <button id="save-button" onclick="saveReport()">Сохранить отчет</button>
   </body>
+  <script defer>
+    const instrumets = {
+      instruments: [
+        {
+          id: 1,
+          "instrument-name": "Лазерный трекер API Radian Plus R-80",
+          "instrument-number": "70681",
+          "instrument-certificate": "С-М/19-12-2022/211174153",
+        },
+        {
+          id: 2,
+          "instrument-name": "Сканер лазерный Leica RTC360",
+          "instrument-number": "2984274",
+          "instrument-certificate": "С-ДЭМ/19-09-2023/279399049",
+        },
+        {
+          id: 3,
+          "instrument-name": "Тахеометр Leica TS60 I",
+          "instrument-number": "890213",
+          "instrument-certificate": "С-Т/14-12-2022/208731450",
+        },
+        {
+          id: 4,
+          "instrument-name": "Тахеометр Sokkia NET1AXII",
+          "instrument-number": " КН0569",
+          "instrument-certificate": "С-ДЭМ/30-08-2023/274062460",
+        },
+        {
+          id: 5,
+          "instrument-name": "Тахеометр SOUTH N3",
+          "instrument-number": "287748",
+          "instrument-certificate": "С-ДЭМ/02-12-2022/205769401",
+        },
+        {
+          id: 6,
+          "instrument-name": "Нивелир Leica NA324 ",
+          "instrument-number": "941324337937",
+          "instrument-certificate": "С-ДЭМ/30-08-2023/274062459",
+        },
+        {
+          id: 7,
+          "instrument-name": "Лазерный дальномер Leica DISTO X3",
+          "instrument-number": "1610930131",
+          "instrument-certificate": "С-EBE/26-09-2022/188789417",
+        },
+        {
+          id: 8,
+          "instrument-name": "Рейка нивелирная RGK TS-5",
+          "instrument-number": "STS50003",
+          "instrument-certificate": "С-СП/21-03-2023/232461132",
+        },
+      ],
+      year: 2023,
+    };
+    document.getElementById("report-date").value = new Date();
+    document.getElementById("sign-date").value = new Date();
+    const picsInPages = {};
+    function render() {
+      {
+        //--------------------------------------------------------------
+        document.getElementById("report-number").value = store.dataset
+          .reportNumber
+          ? store.dataset.reportNumber
+          : "";
+
+        document.getElementById("super-order-number").value = store.dataset
+          .reportNumber
+          ? store.dataset.superOrderNumber
+          : "";
+        document.getElementById("super-order").value = store.dataset
+          .reportNumber
+          ? store.dataset.superOrderNumber
+          : "";
+        document.getElementById("report-date").value = store.dataset
+          .reportNumber
+          ? store.dataset.reportDate
+          : "";
+        document.getElementById("order-number").value = store.dataset
+          .reportNumber
+          ? store.dataset.orderNumber
+          : "";
+        document.getElementById("order-date").value = store.dataset.orderDate
+          ? store.dataset.orderDate
+          : "";
+        document.getElementById("receipt-number").value = store.dataset
+          .reportNumber
+          ? store.dataset.receiptNumber
+          : "";
+        document.getElementById("receipt-date").value = store.dataset
+          .receiptDate
+          ? store.dataset.receiptDate
+          : "";
+        document.getElementById("order-object").value = store.dataset
+          .reportNumber
+          ? store.dataset.orderObject
+          : "";
+        document.getElementById("stage-select").value = store.dataset
+          .reportNumber
+          ? store.dataset.stage
+          : "";
+        document.getElementById("other-text").value = store.dataset.reportNumber
+          ? store.dataset.otherText
+          : "";
+        document.getElementById("measure-place").value = store.dataset
+          .reportNumber
+          ? store.dataset.measurePlace
+          : "";
+        document.getElementById("measure-date").value = store.dataset
+          .measureDate
+          ? store.dataset.measureDate
+          : "";
+
+        document.getElementById("first-sorce").value = store.dataset
+          .reportNumber
+          ? store.dataset.firstSource
+          : "";
+        document.getElementById("second-sorce").value = store.dataset
+          .reportNumber
+          ? store.dataset.secondSource
+          : "";
+        document.getElementById("third-sorce").value = store.dataset
+          .reportNumber
+          ? store.dataset.thirdSource
+          : "";
+
+        document.getElementById("first-instrument").value = store.dataset
+          .reportNumber
+          ? store.dataset.firstInstrument
+          : "";
+
+        document.getElementById("second-instrument").value = store.dataset
+          .reportNumber
+          ? store.dataset.secondInstrument
+          : "";
+
+        document.getElementById("third-instrument").value = store.dataset
+          .reportNumber
+          ? store.dataset.thirdInstrument
+          : "";
+        document.getElementById("conclusion").value = store.dataset.reportNumber
+          ? store.dataset.conclusion
+          : "";
+        document.getElementById("remarks").value = store.dataset.reportNumber
+          ? store.dataset.remarks
+          : "";
+        document.getElementById("full-measure").value = store.dataset
+          .reportNumber
+          ? store.dataset.fullMeashure
+          : "";
+        document.getElementById("acceptance").value = store.dataset.reportNumber
+          ? store.dataset.acceptance
+          : "";
+        document.getElementById("to-correct-required").value = store.dataset
+          .reportNumber
+          ? store.dataset.toCorrectrequired
+          : "";
+        document.getElementById("creater").value = store.dataset.reportNumber
+          ? store.dataset.creater
+          : "";
+        document.getElementById("chief-person").value = store.dataset
+          .reportNumber
+          ? store.dataset.chiefPerson
+          : "";
+        document.getElementById("sign-date").value = store.dataset.signDate
+          ? store.dataset.signDate
+          : new Date();
+
+        //--------------------------------------------------------------
+        // let responce = await fetch("./data.json");
+        let iData = instrumets;
+
+        const instrumentsDatalist = document.querySelector("#instruments");
+        const iInstruments = iData.instruments;
+        if (instrumentsDatalist.childNodes.length === 1) {
+          iInstruments.forEach((element) => {
+            const newOption = document.createElement("option");
+            newOption.textContent = element["instrument-name"];
+            instrumentsDatalist.append(newOption);
+          });
+        }
+
+        const year = document.querySelector("#year");
+        year.textContent = iData.year;
+        const table = document.querySelector(".instruments");
+        let requiredInstrument;
+        table.addEventListener("change", (e) => {
+          requiredInstrument = null;
+          const target = e.target;
+          iInstruments.map((elem) => {
+            if (elem["instrument-name"] === target.value) {
+              requiredInstrument = elem;
+            }
+          });
+          const tdOfRequiredInstrument = target.parentNode;
+          const tdSiblingNumber =
+            tdOfRequiredInstrument.nextSibling.nextSibling;
+          const SiblingSiblingCertificate =
+            tdSiblingNumber.nextSibling.nextSibling;
+          tdSiblingNumber.textContent = requiredInstrument["instrument-number"];
+          SiblingSiblingCertificate.textContent =
+            requiredInstrument["instrument-certificate"];
+        });
+      }
+    }
+    render();
+
+    // _________________________________________________________________________
+    const check_1 = document.querySelector("#full-measure");
+    const check_2 = document.querySelector("#acceptance");
+    const check_3 = document.querySelector("#to-correct-required");
+    document.querySelector(".check-boxes").addEventListener("change", (e) => {
+      const target = e.target;
+      if (target.checked === true) {
+        target.parentNode.setAttribute("style", "text-decoration:none");
+      } else {
+        target.parentNode.setAttribute(
+          "style",
+          "text-decoration:line-through 2px"
+        );
+      }
+    });
+    // _________________________________________________________________________
+    const superOrder = document.querySelector("#super-order");
+    const superOrderNumber = document.querySelector("#super-order-number");
+    superOrderNumber.addEventListener("input", (e) => {
+      superOrder.value = superOrderNumber.value;
+    });
+    // _________________________________________________________________________
+    const other = document.querySelector("#other");
+    const otherText = document.querySelector("#other-text");
+
+    // _________________________________________________________________________
+    let pageCounter = 1;
+    let totalPages = 1;
+    const bodyTag = document.querySelector("body");
+    const reportDate = document.getElementById("report-date");
+    const orderDescription = document.getElementById("order-object");
+    const reportID = document.getElementById("report-number");
+    function addNewPage() {
+      pageCounter++;
+      picsInPages[`${pageCounter}`] = [];
+      bodyTag.insertAdjacentHTML(
+        "beforeend",
+
+        `<p id = "page#${pageCounter}" style="display:none">${pageCounter}<p>
+    <section class="new-page" >
+    <button style="position:absolute" class="remove-page-button">Удалить страницу</button>
+      <div class="new-page-header">
+        <p class="new-page-header-title">
+          ОТЧЕТ О РЕЗУЛЬТАТАХ КОНТРОЛЯ ГЕОМЕТРИЧЕСКОЙ ФОРМЫ
+        </p>
+        <div class="new-page-header-section">
+          <span class="new-page-header-section-id">Отчет № ${reportID.value}-${superOrderNumber.value}-${year.textContent}</span>
+          <span class="new-page-header-section-date"> от ${reportDate.value} </span>
+
+          <span class="new-page-header-section-order--number">
+            Заказ № ${superOrderNumber.value} </span
+          >
+          <span class="new-page-header-section-order--description"
+            >${orderDescription.value}</span
+          >
+        </div>
+      </div>
+      <div class="new-page-content" id=${pageCounter}>
+      <button class="buttonToAddImg"  >Добавить изображение</button>
+      </div>
+      <div class="bottom-title">Лист ${pageCounter} из </div>
+      </section>
+     `
+      );
+      const allPagesCount = document.querySelectorAll(".bottom-title");
+      allPagesCount.forEach((elem, i) => {
+        elem.textContent = "Лист " + (i + 1) + " из " + pageCounter;
+      });
+      const newContent = document.getElementById(`${pageCounter}`);
+      newContent.addEventListener("click", (e) => {
+        if (
+          e.target.tagName === "BUTTON" &&
+          e.target.classList.contains("buttonToAddImg")
+        ) {
+          picsInPages[`${pageCounter}`].push(
+            picsInPages[`${pageCounter}`].length + 1
+          );
+
+          const section = e.currentTarget;
+
+          section.insertAdjacentHTML(
+            "beforeend",
+            ` <div  id='img#${pageCounter}-${
+              picsInPages[`${pageCounter}`][
+                picsInPages[`${pageCounter}`].length - 1
+              ]
+            }' class ="report-images"  >
+        <img style ="rotate:0deg" />
+        <button style="left:1090px; top:${
+          picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+          ] * 125
+        }px"  class ="remove-button">удалить изображение</button>
+        <button style="left:1190px; top:${
+          picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+          ] * 125
+        }px" class = "rotate-button">повернуть</button>
+        <input style="left:1090px; top:${
+          picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+          ] *
+            125 +
+          50
+        }px" type="range" min = "0" max = "100" step ="1" class='size-button' value="100">
+        </div>
+      <input type="file" name="newImg" id="${pageCounter}-${
+              picsInPages[`${pageCounter}`][
+                picsInPages[`${pageCounter}`].length - 1
+              ]
+            }" accept="image/*" >
+    `
+          );
+
+          const newInput = document.getElementById(
+            `${pageCounter}-${
+              picsInPages[`${pageCounter}`][
+                picsInPages[`${pageCounter}`].length - 1
+              ]
+            }`
+          );
+          const newImg = document.getElementById(
+            `img#${pageCounter}-${
+              picsInPages[`${pageCounter}`][
+                picsInPages[`${pageCounter}`].length - 1
+              ]
+            }`
+          );
+          newInput.addEventListener("change", (e) => {
+            const target = e.target;
+
+            if (!FileReader) {
+              alert("FileReader не поддерживается — облом");
+              return;
+            }
+
+            if (!target.files.length) {
+              alert("Ничего не загружено");
+              return;
+            }
+
+            const fileReader = new FileReader();
+            fileReader.onload = function () {
+              newImg.childNodes[1].src = `${fileReader.result}`;
+              // newImg.style = `background-image:url('${fileReader.result}'); background-size:contain; background-repeat:no-repeat`;
+            };
+
+            fileReader.readAsDataURL(target.files[0]);
+            target.style = "display:none";
+          });
+        }
+      });
+      newContent.addEventListener("input", (e) => {
+        if (e.target.tagName === "INPUT") {
+          const img = e.target.parentNode.querySelector("img");
+          img.style.width = `${e.target.value}%`;
+        }
+      });
+    }
+    function refreshReport() {
+      const IDs = document.querySelectorAll(".new-page-header-section-id");
+      const date = document.querySelectorAll(".new-page-header-section-date");
+      const orderNumber = document.querySelectorAll(
+        ".new-page-header-section-order--number"
+      );
+      const orderObject = document.querySelectorAll(
+        ".new-page-header-section-order--description"
+      );
+
+      IDs.forEach((id) => {
+        id.textContent = `Отчет № ${reportID.value}-${superOrderNumber.value}-${year.textContent}`;
+      });
+      date.forEach((date) => {
+        date.textContent = ` от ${reportDate.valueAsDate
+          .toLocaleString("ru")
+          .slice(0, 10)} `;
+      });
+      orderNumber.forEach((on) => {
+        on.textContent = `Заказ № ${superOrderNumber.value} `;
+      });
+
+      orderObject.forEach((oO) => {
+        oO.textContent = `${orderDescription.value}`;
+      });
+    }
+    document.addEventListener("mousedown", (e) => {
+      const img = e.target;
+      const divImg = e.target.parentNode;
+      const mainPage = document.querySelector(".main_page");
+      const mainPageHeight = window.getComputedStyle(mainPage, null);
+      const mainPageHeightNumber = parseInt(mainPageHeight.height.slice(0, -2));
+
+      let shiftX = e.clientX - img.getBoundingClientRect().left;
+      let shiftY = e.clientY - img.getBoundingClientRect().top;
+
+      const divId = e.target.parentNode.parentNode.id;
+
+      const prevPageCounter = pageCounter;
+      pageCounter = parseInt(divId);
+      if (img.tagName === "IMG") {
+        img.style.position = "absolute";
+
+        function moveAt(pageX, pageY) {
+          img.style.left = pageX - shiftX + "px";
+          img.style.top = pageY - shiftY + "px";
+        }
+      }
+      document.addEventListener("mousemove", moveImg);
+      function moveImg(e) {
+        moveAt(e.pageX, e.pageY - mainPageHeightNumber * (pageCounter - 1));
+      }
+      document.onmouseup = function () {
+        pageCounter = prevPageCounter;
+        document.removeEventListener("mousemove", moveImg);
+        img.onmouseup = null;
+      };
+      img.oncontextmenu = () => {
+        false;
+      };
+      img.ondragstart = function () {
+        return false;
+      };
+    });
+
+    document.addEventListener("click", (e) => {
+      if (
+        e.target.tagName === "BUTTON" &&
+        e.target.classList.contains("remove-button")
+      ) {
+        e.target.parentNode.nextSibling.nextSibling.remove();
+        e.target.parentNode.remove();
+      }
+      if (
+        e.target.tagName === "BUTTON" &&
+        e.target.classList.contains("remove-page-button")
+      ) {
+        e.target.parentNode.remove();
+        pageCounter--;
+        const allPagesCount = document.querySelectorAll(".bottom-title");
+        allPagesCount.forEach((elem, i) => {
+          elem.textContent = "Лист " + (i + 1) + " из " + pageCounter;
+        });
+      }
+      if (
+        e.target.tagName === "BUTTON" &&
+        e.target.classList.contains("rotate-button")
+      ) {
+        const img = e.target.parentNode.querySelector("img");
+        const newtDeg = parseInt(img.style.rotate.slice(0, -3)) + 90;
+        img.style.rotate = `${newtDeg}deg`;
+        // if (img.style.rotate !== ""){
+        //   img.style.rotate = `${img.style.rotate + 90}deg`;else{
+
+        //   }
+      }
+    });
+    function FR() {}
+    // newImg.addEventListener("change", FR);
+
+    function saveReport() {
+      store.dataset.reportNumber =
+        document.getElementById("report-number").value;
+      store.dataset.superOrderNumber =
+        document.getElementById("super-order-number").value;
+      store.dataset.reportDate = document.getElementById("report-date").value;
+      store.dataset.orderNumber = document.getElementById("order-number").value;
+      store.dataset.orderDate = document.getElementById("order-date").value;
+      store.dataset.receiptNumber =
+        document.getElementById("receipt-number").value;
+      store.dataset.receiptDate = document.getElementById("receipt-date").value;
+      store.dataset.orderObject = document.getElementById("order-object").value;
+      store.dataset.stage = document.getElementById("stage-select").value;
+      store.dataset.otherText = document.getElementById("other-text").value;
+      store.dataset.measurePlace =
+        document.getElementById("measure-place").value;
+      store.dataset.measureDate = document.getElementById("measure-date").value;
+      store.dataset.firstSource = document.getElementById("first-sorce").value;
+      store.dataset.secondSource =
+        document.getElementById("second-sorce").value;
+      store.dataset.thirdSource = document.getElementById("third-sorce").value;
+      store.dataset.firstInstrument =
+        document.getElementById("first-instrument").value;
+      store.dataset.secondInstrument =
+        document.getElementById("second-instrument").value;
+      store.dataset.thirdInstrument =
+        document.getElementById("third-instrument").value;
+      store.dataset.conclusion = document.getElementById("conclusion").value;
+      store.dataset.remarks = document.getElementById("remarks").value;
+      store.dataset.fullMeashure =
+        document.getElementById("full-measure").value;
+      store.dataset.acceptance = document.getElementById("acceptance").value;
+      store.dataset.toCorrectrequired = document.getElementById(
+        "to-correct-required"
+      ).value;
+      store.dataset.creater = document.getElementById("creater").value;
+      store.dataset.chiefPerson = document.getElementById("chief-person").value;
+      store.dataset.signDate = document.getElementById("sign-date").value;
+    }
+  </script>
 </html>

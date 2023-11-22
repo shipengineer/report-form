@@ -148,7 +148,7 @@ function render() {
       : "";
     document.getElementById("sign-date").value = store.dataset.signDate
       ? store.dataset.signDate
-      : new Date().;
+      : new Date();
 
     //--------------------------------------------------------------
     // let responce = await fetch("./data.json");
