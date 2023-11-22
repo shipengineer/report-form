@@ -1,857 +1,865 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Отчет геометрических характеристик</title>
-    <!-- <link rel="stylesheet" href="style.css" /> -->
-  </head>
-  <!-- <script src="data.js"></script> -->
-  <!-- <script src="script.js" defer></script> -->
-  <style>
-    * {
-      margin: 0;
-      box-sizing: border-box;
-      padding: 0;
-    }
 
-    *:required {
-      background-color: pink;
-    }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Отчет геометрических характеристик</title>
+  <!-- <link rel="stylesheet" href="style.css" /> -->
+</head>
+<!-- <script src="data.js"></script> -->
+<!-- <script src="script.js" defer></script> -->
+<style>
+  * {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+  }
 
-    #add-page {
-      z-index: 2;
-      position: absolute;
-      position: sticky;
-      top: 10px;
-      width: 150px;
-      background-color: darkorange;
-    }
+  *:required {
+    background-color: pink;
+  }
 
-    #refresh-page {
-      position: absolute;
-      top: 792px;
-      left: 400px;
-      width: 150px;
-      background-color: pink;
-    }
+  #add-page {
+    z-index: 2;
+    position: absolute;
+    position: sticky;
+    top: 10px;
+    width: 150px;
+    background-color: darkorange;
+  }
 
-    #save-button {
-      position: absolute;
-      top: 792px;
-      left: 250px;
-      background-color: chartreuse;
-    }
+  #refresh-page {
+    position: absolute;
+    top: 792px;
+    left: 400px;
+    width: 150px;
+    background-color: pink;
+  }
 
+  #save-button {
+    position: absolute;
+    top: 792px;
+    left: 250px;
+    background-color: chartreuse;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    margin-left: 5mm;
+    width: 297mm;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body textarea {
+    border-top: 1px solid #000;
+    padding: 10px;
+  }
+
+  body .main_page,
+  body .new-page {
+    padding: 20mm 10mm 0mm 10mm;
+    height: 210mm;
+  }
+
+  body .main_page .bottom-title,
+  body .new-page .bottom-title {
+    height: 10mm;
+    text-align: end;
+  }
+
+  .report-images .remove-button {
+    z-index: 1;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+
+  .report-images .size-button {
+    z-index: 1;
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    width: 200px;
+  }
+
+  .report-images .rotate-button {
+    z-index: 1;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  .report-images:has(.size-button:hover)>img,
+  .report-images:has(.remove-button:hover)>img {
+    border: 3px dotted red;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 2px;
+  }
+
+  input {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #super-order {
+    width: 100px;
+  }
+
+  select {
+    border: none;
+    border-bottom: 1px solid #000;
+    height: 1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-align: center;
+  }
+
+  #stage-select {
+    padding: 0 5px;
+  }
+
+  .measure-date-other {
+    justify-self: flex-start;
+    white-space: nowrap;
+  }
+
+  #measure-place {
+    width: 150px;
+  }
+
+  #object {
+    justify-self: flex-start;
+  }
+
+  #other-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    display: block;
+    justify-self: start;
+    grid-row: 3 / span 2;
+    grid-column: 2;
+    width: 100%;
+    height: 70px;
+    border: 2px solid #000;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  header {
+    padding: 5px 10px;
+    border: 2px solid #000;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header>div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2px;
+  }
+
+  header>div:first-child {
+    border-bottom: 1px solid #000;
+  }
+
+  header>div>p:first-child {
+    margin-right: 5px;
+  }
+
+  header #report-number {
+    max-width: 50px;
+  }
+
+  header #super-order-number {
+    width: 50px;
+  }
+
+  header #order-number {
+    width: 40px;
+  }
+
+  header #order-date {
+    width: 100px;
+  }
+
+  header #receipt-number {
+    width: 40px;
+  }
+
+  header .snsz-logo {
+    padding-left: 2px;
+    font-weight: bold;
+  }
+
+  .main {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    border: 2px solid #000;
+    border-top: none;
+    padding: 2px;
+    width: 100%;
+  }
+
+  .order {
+    row-gap: 5px;
+    align-items: center;
+    justify-items: start;
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin-bottom: 5px;
+    padding: 10px;
+    border: 2px solid #000;
+  }
+
+  .order>*:nth-child(2n) {
+    width: 100%;
+    justify-self: start;
+    text-align: left;
+  }
+
+  .order #order-object {
+    width: 80%;
+  }
+
+  .sources {
+    border-right: 2px solid #000;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+  }
+
+  .sources th {
+    border: 1px solid #000;
+  }
+
+  .sources table {
+    border: 1px solid #000;
+    border-right: none;
+  }
+
+  .instruments table,
+  .sources table {
+    font-size: 14px;
+    border-spacing: 0px;
+  }
+
+  .instruments .instruments-item input,
+  .sources .instruments-item input {
+    padding: 2px;
+    width: 100%;
+    border: none;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .instruments th,
+  .sources th {
+    white-space: nowrap;
+    width: 100%;
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  .instruments th:first-child,
+  .sources th:first-child {
+    word-wrap: normal;
+  }
+
+  .instruments th:nth-child(2),
+  .sources th:nth-child(2) {
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+
+  .instruments td:nth-child(1),
+  .sources td:nth-child(1) {
+    word-wrap: normal;
+    border-right: 1px solid #000;
+    border-left: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+
+  .instruments td:nth-child(2),
+  .sources td:nth-child(2) {
+    white-space: nowrap;
+    border-bottom: 1px solid #000;
+  }
+
+  .instruments td:nth-child(3),
+  .sources td:nth-child(3) {
+    white-space: nowrap;
+    border-right: 1px solid #000;
+    border-left: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+
+  .instruments td,
+  .sources td {
+    padding: 0px 2px;
+    text-align: center;
+  }
+
+  .sources-table input {
+    border: none;
+  }
+
+  .remarks {
+    width: 100%;
+    border: 2px solid #000;
+    border-top: none;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .remarks div {
+    flex: 0 1 50%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .remarks div span {
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .remarks div span:first-child {
+    border-right: 1px solid #000;
+  }
+
+  .remarks div textarea {
+    height: 175px;
+  }
+
+  .summary {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    grid-template-rows: 1.5rem 1fr;
+    height: -moz-fit-content;
+    height: fit-content;
+    border: 2px solid #000;
+    border-top: none;
+  }
+
+  .summary span {
+    font-weight: bold;
+    grid-column: 1/3;
+    text-align: center;
+    border: 1px solid #000;
+    border-top: none;
+  }
+
+  .summary .check-boxes {
+    grid-row: 2;
+    grid-column: 1/3;
+    width: 100%;
+    height: 4rem;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 14px;
+  }
+
+  .summary .check-boxes label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .summary .check-boxes label:first-child {
+    margin-left: 10px;
+  }
+
+  .summary .check-boxes input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  .summary .check-boxes input+label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    border: 3px solid #000;
+  }
+
+  .summary .check-boxes input+label::before {
+    position: relative;
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin-right: 0.5em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+  }
+
+  .summary .check-boxes input:checked+label {
+    margin-right: 10px;
+    z-index: 1;
+    height: 20px;
+    border: none;
+  }
+
+  .summary .check-boxes input:checked+label::before,
+  .summary .check-boxes input:checked+label::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 4px;
+    background: #000000;
+  }
+
+  .summary .check-boxes input:checked+label::before {
+    transform: rotate(45deg);
+    margin-left: 5px;
+  }
+
+  .summary .check-boxes input:checked+label::after {
+    transform: rotate(-45deg);
+  }
+
+  .summary .check-boxes #label_1,
+  .summary .check-boxes #label_2,
+  .summary .check-boxes #label_3 {
+    -webkit-text-decoration: line-through 2px;
+    text-decoration: line-through 2px;
+  }
+
+  .signature {
+    grid-row: 4;
+    grid-column: 2;
+    justify-content: end;
+    display: flex;
+    padding: 10px;
+  }
+
+  .signature .sign {
+    width: 200px;
+    height: 1rem;
+    border-bottom: 1px solid #000;
+  }
+
+  .resolution,
+  .resolve {
+    width: 100%;
+  }
+
+  .resolution div,
+  .resolve div {
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #000;
+    background-color: #8d8d8d;
+  }
+
+  .resolution textarea,
+  .resolve textarea {
+    width: 100%;
+    height: 265px;
+  }
+
+  .resolution table,
+  .resolve table {
+    width: 100%;
+  }
+
+  .resolution th,
+  .resolve th {
+    border: 1px solid #000;
+    text-align: center;
+  }
+
+  .resolution td,
+  .resolve td {
+    text-align: center;
+    border: 1px solid #000;
+    height: 30px;
+  }
+
+  .resolution td:not(:first-child),
+  .resolve td:not(:first-child) {
+    width: 50px;
+  }
+
+  footer {
+    grid-column: 1/4;
+    padding: 5px 0 5px 10px;
+    grid-row: 3;
+    display: flex;
+    align-self: flex-end;
+  }
+
+  .new-page {
+    height: 210mm;
+    display: grid;
+    grid-template-rows: 12mm 168mm 10mm;
+    position: relative;
+  }
+
+  .new-page-header {
+    display: flex;
+  }
+
+  .new-page-header-title {
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    border: 1px solid #000;
+    white-space: nowrap;
+  }
+
+  .new-page-header-section {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .new-page-header-section>span {
+    white-space: nowrap;
+    border: 1px solid #000;
+  }
+
+  .new-page-header-section-id,
+  .new-page-header-section-date {
+    padding: 2px 0.5rem;
+  }
+
+  .new-page-header-section-order--number {
+    padding: 2px 0.5rem;
+    flex-grow: 1;
+  }
+
+  .new-page-header-section-order--description {
+    width: 100%;
+    padding: 2px;
+  }
+
+  .new-page-content {
+    flex-wrap: wrap;
+    overflow: hidden;
+    display: flex;
+    border: 1px solid #000;
+  }
+
+  .new-page-content div {
+    max-height: 100%;
+    background-size: cover;
+  }
+
+  .new-page-content div img {
+    width: -moz-fit-content;
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .new-page-content .buttonToAddImg {
+    position: absolute;
+    top: 15mm;
+    z-index: 1;
+  }
+
+  @media print {
+
+    html,
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 14px;
-      margin-left: 5mm;
-      width: 297mm;
-      display: flex;
-      flex-direction: column;
-    }
-    body textarea {
-      border-top: 1px solid #000;
-      padding: 10px;
-    }
-    body .main_page,
-    body .new-page {
-      padding: 20mm 10mm 0mm 10mm;
-      height: 210mm;
-    }
-    body .main_page .bottom-title,
-    body .new-page .bottom-title {
-      height: 10mm;
-      text-align: end;
-    }
-
-    .report-images .remove-button {
-      z-index: 1;
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      width: -moz-fit-content;
-      width: fit-content;
-    }
-    .report-images .size-button {
-      z-index: 1;
-      position: absolute;
-      top: 50px;
-      left: 10px;
-      width: 200px;
-    }
-    .report-images .rotate-button {
-      z-index: 1;
-      position: absolute;
-      top: 10px;
-      left: 10px;
-    }
-
-    .report-images:has(.size-button:hover) > img,
-    .report-images:has(.remove-button:hover) > img {
-      border: 3px dotted red;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      text-align: center;
-      border: none;
-      border-bottom: 1px solid #000;
-      padding: 2px;
-    }
-
-    input {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 14px;
-    }
-
-    #super-order {
-      width: 100px;
-    }
-
-    select {
-      border: none;
-      border-bottom: 1px solid #000;
-      height: 1rem;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      text-align: center;
-    }
-
-    #stage-select {
-      padding: 0 5px;
-    }
-
-    .measure-date-other {
-      justify-self: flex-start;
-      white-space: nowrap;
-    }
-
-    #measure-place {
-      width: 150px;
-    }
-
-    #object {
-      justify-self: flex-start;
-    }
-
-    #other-text {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 14px;
-      display: block;
-      justify-self: start;
-      grid-row: 3 / span 2;
-      grid-column: 2;
-      width: 100%;
-      height: 70px;
-      border: 2px solid #000;
-    }
-
-    p {
-      text-align: center;
-    }
-
-    header {
-      padding: 5px 10px;
-      border: 2px solid #000;
-      display: flex;
-      flex-direction: column;
-    }
-    header > div {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      padding: 2px;
-    }
-    header > div:first-child {
-      border-bottom: 1px solid #000;
-    }
-    header > div > p:first-child {
-      margin-right: 5px;
-    }
-    header #report-number {
-      max-width: 50px;
-    }
-    header #super-order-number {
-      width: 50px;
-    }
-    header #order-number {
-      width: 40px;
-    }
-    header #order-date {
-      width: 100px;
-    }
-    header #receipt-number {
-      width: 40px;
-    }
-    header .snsz-logo {
-      padding-left: 2px;
-      font-weight: bold;
-    }
-
-    .main {
-      display: grid;
-      grid-template-columns: 80% 20%;
-      border: 2px solid #000;
-      border-top: none;
-      padding: 2px;
-      width: 100%;
-    }
-
-    .order {
-      row-gap: 5px;
-      align-items: center;
-      justify-items: start;
-      display: grid;
-      grid-template-columns: 350px 1fr;
-      grid-template-rows: 1fr 1fr;
-      margin-bottom: 5px;
-      padding: 10px;
-      border: 2px solid #000;
-    }
-    .order > *:nth-child(2n) {
-      width: 100%;
-      justify-self: start;
-      text-align: left;
-    }
-    .order #order-object {
-      width: 80%;
-    }
-
-    .sources {
-      border-right: 2px solid #000;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      grid-template-rows: 1fr;
-    }
-    .sources th {
-      border: 1px solid #000;
-    }
-    .sources table {
-      border: 1px solid #000;
-      border-right: none;
-    }
-
-    .instruments table,
-    .sources table {
-      font-size: 14px;
-      border-spacing: 0px;
-    }
-    .instruments .instruments-item input,
-    .sources .instruments-item input {
-      padding: 2px;
-      width: 100%;
-      border: none;
-      font-size: 14px;
-      text-align: center;
-    }
-    .instruments th,
-    .sources th {
-      white-space: nowrap;
-      width: 100%;
-      font-size: 14px;
-      padding: 5px;
-    }
-    .instruments th:first-child,
-    .sources th:first-child {
-      word-wrap: normal;
-    }
-    .instruments th:nth-child(2),
-    .sources th:nth-child(2) {
-      border-top: 1px solid #000;
-      border-bottom: 1px solid #000;
-    }
-    .instruments td:nth-child(1),
-    .sources td:nth-child(1) {
-      word-wrap: normal;
-      border-right: 1px solid #000;
-      border-left: 1px solid #000;
-      border-bottom: 1px solid #000;
-    }
-    .instruments td:nth-child(2),
-    .sources td:nth-child(2) {
-      white-space: nowrap;
-      border-bottom: 1px solid #000;
-    }
-    .instruments td:nth-child(3),
-    .sources td:nth-child(3) {
-      white-space: nowrap;
-      border-right: 1px solid #000;
-      border-left: 1px solid #000;
-      border-bottom: 1px solid #000;
-    }
-    .instruments td,
-    .sources td {
-      padding: 0px 2px;
-      text-align: center;
-    }
-
-    .sources-table input {
-      border: none;
-    }
-
-    .remarks {
-      width: 100%;
-      border: 2px solid #000;
-      border-top: none;
-      display: flex;
-      flex-direction: row;
-    }
-    .remarks div {
-      flex: 0 1 50%;
-      display: flex;
-      flex-direction: column;
-    }
-    .remarks div span {
-      width: 100%;
-      font-weight: bold;
-      text-align: center;
-    }
-    .remarks div span:first-child {
-      border-right: 1px solid #000;
-    }
-    .remarks div textarea {
-      height: 175px;
-    }
-
-    .summary {
-      display: grid;
-      grid-template-columns: 350px 1fr;
-      grid-template-rows: 1.5rem 1fr;
-      height: -moz-fit-content;
-      height: fit-content;
-      border: 2px solid #000;
-      border-top: none;
-    }
-    .summary span {
-      font-weight: bold;
-      grid-column: 1/3;
-      text-align: center;
-      border: 1px solid #000;
-      border-top: none;
-    }
-    .summary .check-boxes {
-      grid-row: 2;
-      grid-column: 1/3;
-      width: 100%;
-      height: 4rem;
-      margin-top: 10px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      font-size: 14px;
-    }
-    .summary .check-boxes label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .summary .check-boxes label:first-child {
-      margin-left: 10px;
-    }
-    .summary .check-boxes input {
-      position: absolute;
-      z-index: -1;
-      opacity: 0;
-    }
-    .summary .check-boxes input + label {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-      border: 3px solid #000;
-    }
-    .summary .check-boxes input + label::before {
-      position: relative;
-      content: "";
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-      flex-grow: 0;
-      margin-right: 0.5em;
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: 50% 50%;
-    }
-    .summary .check-boxes input:checked + label {
-      margin-right: 10px;
-      z-index: 1;
-      height: 20px;
-      border: none;
-    }
-    .summary .check-boxes input:checked + label::before,
-    .summary .check-boxes input:checked + label::after {
-      content: "";
-      position: absolute;
-      width: 24px;
-      height: 4px;
-      background: #000000;
-    }
-    .summary .check-boxes input:checked + label::before {
-      transform: rotate(45deg);
       margin-left: 5px;
-    }
-    .summary .check-boxes input:checked + label::after {
-      transform: rotate(-45deg);
-    }
-    .summary .check-boxes #label_1,
-    .summary .check-boxes #label_2,
-    .summary .check-boxes #label_3 {
-      -webkit-text-decoration: line-through 2px;
-      text-decoration: line-through 2px;
+      width: 297mm;
     }
 
-    .signature {
-      grid-row: 4;
-      grid-column: 2;
-      justify-content: end;
-      display: flex;
-      padding: 10px;
-    }
-    .signature .sign {
-      width: 200px;
-      height: 1rem;
-      border-bottom: 1px solid #000;
+    button {
+      display: none;
     }
 
-    .resolution,
-    .resolve {
-      width: 100%;
-    }
-    .resolution div,
-    .resolve div {
-      text-align: center;
-      padding: 5px;
-      border: 1px solid #000;
-      background-color: #8d8d8d;
-    }
-    .resolution textarea,
-    .resolve textarea {
-      width: 100%;
-      height: 265px;
-    }
-    .resolution table,
-    .resolve table {
-      width: 100%;
-    }
-    .resolution th,
-    .resolve th {
-      border: 1px solid #000;
-      text-align: center;
-    }
-    .resolution td,
-    .resolve td {
-      text-align: center;
-      border: 1px solid #000;
-      height: 30px;
-    }
-    .resolution td:not(:first-child),
-    .resolve td:not(:first-child) {
-      width: 50px;
+    .other,
+    .size-button,
+    .remove-button {
+      display: none;
     }
 
-    footer {
-      grid-column: 1/4;
-      padding: 5px 0 5px 10px;
-      grid-row: 3;
-      display: flex;
-      align-self: flex-end;
+    :required {
+      background-color: #fff;
     }
+  }
 
-    .new-page {
-      height: 210mm;
-      display: grid;
-      grid-template-rows: 12mm 168mm 10mm;
-      position: relative;
-    }
-    .new-page-header {
-      display: flex;
-    }
-    .new-page-header-title {
-      padding: 0 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 50%;
-      border: 1px solid #000;
-      white-space: nowrap;
-    }
-    .new-page-header-section {
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-    }
-    .new-page-header-section > span {
-      white-space: nowrap;
-      border: 1px solid #000;
-    }
-    .new-page-header-section-id,
-    .new-page-header-section-date {
-      padding: 2px 0.5rem;
-    }
-    .new-page-header-section-order--number {
-      padding: 2px 0.5rem;
-      flex-grow: 1;
-    }
-    .new-page-header-section-order--description {
-      width: 100%;
-      padding: 2px;
-    }
-    .new-page-content {
-      flex-wrap: wrap;
-      overflow: hidden;
-      display: flex;
-      border: 1px solid #000;
-    }
-    .new-page-content div {
-      max-height: 100%;
-      background-size: cover;
-    }
-    .new-page-content div img {
-      width: -moz-fit-content;
-      width: fit-content;
-      max-width: 100%;
-    }
-    .new-page-content .buttonToAddImg {
-      position: absolute;
-      top: 15mm;
-      z-index: 1;
-    }
+  /*# sourceMappingURL=style.css.map */
+</style>
 
-    @media print {
-      html,
-      body {
-        margin-left: 5px;
-        width: 297mm;
-      }
-      button {
-        display: none;
-      }
-      .other,
-      .size-button,
-      .remove-button {
-        display: none;
-      }
-      :required {
-        background-color: #fff;
-      }
-    } /*# sourceMappingURL=style.css.map */
-  </style>
-  <body>
-    <div id="store" style="display: none">Сохранность</div>
-    <section class="main_page">
-      <header>
-        <div>
-          <p>ОТЧЕТ О РЕЗУЛЬТАТАХ КОНТРОЛЯ ГЕОМЕТРИЧЕСКОЙ ФОРМЫ</p>
-          <p>
-            №
-            <input
-              type="text"
-              name="report-number"
-              id="report-number"
-              pattern="\d*"
-              required
-            />-<input
-              type="text"
-              name="super-order-number"
-              id="super-order-number"
-              required
-            />-<span id="year"></span>
-          </p>
-          <p>
-            от
-            <input type="date" name="report-date" id="report-date" required />
-          </p>
-          <div class="snsz-logo">АО "СНСЗ"</div>
-        </div>
-        <div>
-          <p>
-            ОСНОВАНИЕ заявка №
-            <input type="text" name="order-number" id="order-number" required />
-            от
-            <input type="date" name="order-date" id="order-date" required />
-          </p>
-          <p>
-            Приложение к уведомлению №
-            <input
-              type="text"
-              name="receipt-number"
-              id="receipt-number"
-              required
-            />
-            от
-            <input type="date" name="receipt-date" id="receipt-date" required />
-          </p>
-        </div>
-      </header>
-      <div class="main">
-        <section class="main-section">
-          <div class="order">
-            <p>Заказ №<input type="text" id="super-order" /></p>
-            <p id="object">
-              Объект
-              <input
-                type="text"
-                name="order-object"
-                id="order-object"
-                required
-              />
-            </p>
-            <p>
-              <span>Этап измерений</span>
-
-              <select id="stage-select" required>
-                <option value="others">Другое</option>
-                <option value="before-welding-itself">Перед сваркой</option>
-                <option value="after-welding-itself">После сварки</option>
-                <option value="before-welding-mounting">
-                  Перед сваркой на заказе
-                </option>
-                <option value="before-welding-mounting">
-                  После сварки на заказе
-                </option>
-              </select>
-            </p>
-            <textarea type="text" name="other-text" id="other-text"></textarea>
-            <p class="measure-date-other">
-              Дата проведения измерений
-              <input
-                type="date"
-                name="measure-date"
-                id="measure-date"
-                required
-              />
-            </p>
-            <p>
-              Место измерений
-              <input
-                type="text"
-                name="measure-place"
-                id="measure-place"
-                required
-              />
-            </p>
-          </div>
-          <div class="sources">
-            <table class="sources-table">
-              <tr>
-                <th>РД, НД, РКД</th>
-              </tr>
-              <tr>
-                <td>
-                  <input type="text" name="first-sorce" id="first-sorce" />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="text" name="second-sorce" id="second-sorce" />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="text" name="third-sorce" id="third-sorce" />
-                </td>
-              </tr>
-            </table>
-            <div class="instruments">
-              <table>
-                <tr>
-                  <th>Наименование средства измерения</th>
-                  <th>Заводской №</th>
-                  <th>Свидетельство о поверке</th>
-                </tr>
-                <tr class="instruments-item">
-                  <td>
-                    <input
-                      list="instruments"
-                      id="first-instrument"
-                      name="first-instrument"
-                    />
-                  </td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr class="instruments-item">
-                  <td>
-                    <input
-                      list="instruments"
-                      id="second-instrument"
-                      name="second-instrument"
-                    />
-                  </td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr class="instruments-item">
-                  <td>
-                    <input
-                      list="instruments"
-                      id="third-instrument"
-                      name="third-instrument"
-                    />
-                  </td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <datalist id="instruments"> </datalist>
-              </table>
-            </div>
-          </div>
-          <div class="remarks">
-            <div>
-              <span>Заключение</span>
-              <textarea name="conclusion" id="conclusion"></textarea>
-            </div>
-            <div id="remarks-zone">
-              <span>Замечания</span>
-              <textarea name="remarks" id="remarks"></textarea>
-            </div>
-          </div>
-          <div class="summary">
-            <span>Заключение по результатам измерений</span>
-            <div class="check-boxes">
-              <label for="full-measure" id="label_1"
-                ><input
-                  type="checkbox"
-                  name="full-measure"
-                  id="full-measure"
-                /><label for="full-measure"></label>Измерения выполнены в полном
-                объеме</label
-              >
-
-              <label for="acceptance" id="label_2"
-                ><input
-                  type="checkbox"
-                  name="acceptance"
-                  id="acceptance"
-                /><label for="acceptance"></label>Соответсвтует РД, РКД,
-                НД</label
-              >
-              <label for="to-correct-required" id="label_3"
-                ><input
-                  type="checkbox"
-                  name="to-correct-required"
-                  id="to-correct-required"
-                /><label for="to-correct-required"></label
-                ><b>НЕ &nbsp </b> Соответсвтует РД, РКД, НД</label
-              >
-            </div>
-            <footer>
-              <p>
-                Составил<select id="creater">
-                  <option value="adzaharikov">Захариков А.Д.</option>
-                  <option value="eakalchenko">Кальченко Е.А.</option>
-                  <option value="avmysnik">Мысник А.В.</option>
-                  <option value="yvnesterkin">Нестеркин Ю.В.</option>
-                  <option value="asostanin">Останин А.С.</option>
-                  <option value="napolyakov">Поляков Н.А</option>
-                </select>
-              </p>
-              <p>
-                Подпись______________________Дата<input
-                  type="date"
-                  id="sign-date"
-                />
-              </p>
-            </footer>
-            <div class="signature">
-              <select>
-                <option value="chief" id="checker" selected>Проверил</option>
-              </select>
-              <div class="sign"></div>
-              <select name="chief-person" id="chief-person">
-                <option value="pishugin">Пищугин Е.А.</option>
-                <option value="polyakov">Поляков Н.А.</option>
-                <option value="kalchenko">Кальченко Е.А.</option>
-                <option value="mysnik">Мысник А.В.</option>
-              </select>
-
-              <!-- <div style="border-bottom: 1px solid #000; width: 100px"></div> -->
-            </div>
-          </div>
-        </section>
-        <section>
-          <div class="resolution">
-            <div>РЕШЕНИЕ ТУ</div>
-            <textarea name="resolution" id="resolution"></textarea>
-            <table>
-              <thead>
-                <tr>
-                  <th colspan="3">Ответственный</th>
-                </tr>
-              </thead>
-              <tr>
-                <td>ФИО</td>
-                <td>Дата</td>
-                <td>Подпись</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </div>
-          <div class="resolve agree">
-            <div>СОГЛАСОВАНО ОРК</div>
-
-            <table>
-              <thead>
-                <tr>
-                  <th colspan="3">Ответственный</th>
-                </tr>
-              </thead>
-              <tr>
-                <td>ФИО</td>
-                <td>Дата</td>
-                <td>Подпись</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </div>
-          <div class="resolve agree">
-            <div>СОГЛАСОВАНО ОТК</div>
-
-            <table>
-              <thead>
-                <tr>
-                  <th colspan="3">Ответственный</th>
-                </tr>
-              </thead>
-              <tr>
-                <td>ФИО</td>
-                <td>Дата</td>
-                <td>Подпись</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </div>
-        </section>
+<body>
+  <div id="store" style="display: none">Сохранность</div>
+  <section class="main_page">
+    <header>
+      <div>
+        <p>ОТЧЕТ О РЕЗУЛЬТАТАХ КОНТРОЛЯ ГЕОМЕТРИЧЕСКОЙ ФОРМЫ</p>
+        <p>
+          №
+          <input type="text" name="report-number" id="report-number" pattern="\d*" required />-<input type="text"
+            name="super-order-number" id="super-order-number" required />-<span id="year"></span>
+        </p>
+        <p>
+          от
+          <input type="date" name="report-date" id="report-date" required />
+        </p>
+        <div class="snsz-logo">АО "СНСЗ"</div>
       </div>
-      <div class="bottom-title"></div>
-    </section>
-    <button id="add-page" onClick="addNewPage()">Добавить страницу</button>
-    <button id="refresh-page" onClick="refreshReport()">
-      Обновление отчета
-    </button>
-    <button id="save-button" onclick="saveReport()">Сохранить отчет</button>
-  </body>
+      <div>
+        <p>
+          ОСНОВАНИЕ заявка №
+          <input type="text" name="order-number" id="order-number" required />
+          от
+          <input type="date" name="order-date" id="order-date" required />
+        </p>
+        <p>
+          Приложение к уведомлению №
+          <input type="text" name="receipt-number" id="receipt-number" required />
+          от
+          <input type="date" name="receipt-date" id="receipt-date" required />
+        </p>
+      </div>
+    </header>
+    <div class="main">
+      <section class="main-section">
+        <div class="order">
+          <p>Заказ №<input type="text" id="super-order" /></p>
+          <p id="object">
+            Объект
+            <input type="text" name="order-object" id="order-object" required />
+          </p>
+          <p>
+            <span>Этап измерений</span>
+
+            <select id="stage-select" required>
+              <option value="others">Другое</option>
+              <option value="before-welding-itself">Перед сваркой</option>
+              <option value="after-welding-itself">После сварки</option>
+              <option value="before-welding-mounting">
+                Перед сваркой на заказе
+              </option>
+              <option value="before-welding-mounting">
+                После сварки на заказе
+              </option>
+            </select>
+          </p>
+          <textarea type="text" name="other-text" id="other-text"></textarea>
+          <p class="measure-date-other">
+            Дата проведения измерений
+            <input type="date" name="measure-date" id="measure-date" required />
+          </p>
+          <p>
+            Место измерений
+            <input type="text" name="measure-place" id="measure-place" required />
+          </p>
+        </div>
+        <div class="sources">
+          <table class="sources-table">
+            <tr>
+              <th>РД, НД, РКД</th>
+            </tr>
+            <tr>
+              <td>
+                <input type="text" name="first-sorce" id="first-sorce" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="text" name="second-sorce" id="second-sorce" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="text" name="third-sorce" id="third-sorce" />
+              </td>
+            </tr>
+          </table>
+          <div class="instruments">
+            <table>
+              <tr>
+                <th>Наименование средства измерения</th>
+                <th>Заводской №</th>
+                <th>Свидетельство о поверке</th>
+              </tr>
+              <tr class="instruments-item">
+                <td>
+                  <input list="instruments" id="first-instrument" name="first-instrument" />
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="instruments-item">
+                <td>
+                  <input list="instruments" id="second-instrument" name="second-instrument" />
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr class="instruments-item">
+                <td>
+                  <input list="instruments" id="third-instrument" name="third-instrument" />
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              <datalist id="instruments"> </datalist>
+            </table>
+          </div>
+        </div>
+        <div class="remarks">
+          <div>
+            <span>Заключение</span>
+            <textarea name="conclusion" id="conclusion"></textarea>
+          </div>
+          <div id="remarks-zone">
+            <span>Замечания</span>
+            <textarea name="remarks" id="remarks"></textarea>
+          </div>
+        </div>
+        <div class="summary">
+          <span>Заключение по результатам измерений</span>
+          <div class="check-boxes">
+            <label for="full-measure" id="label_1"><input type="checkbox" name="full-measure" id="full-measure" /><label
+                for="full-measure"></label>Измерения выполнены в полном
+              объеме</label>
+
+            <label for="acceptance" id="label_2"><input type="checkbox" name="acceptance" id="acceptance" /><label
+                for="acceptance"></label>Соответсвтует РД, РКД,
+              НД</label>
+            <label for="to-correct-required" id="label_3"><input type="checkbox" name="to-correct-required"
+                id="to-correct-required" /><label for="to-correct-required"></label><b>НЕ &nbsp </b> Соответсвтует РД,
+              РКД, НД</label>
+          </div>
+          <footer>
+            <p>
+              Составил<select id="creater">
+                <option value="adzaharikov">Захариков А.Д.</option>
+                <option value="eakalchenko">Кальченко Е.А.</option>
+                <option value="avmysnik">Мысник А.В.</option>
+                <option value="yvnesterkin">Нестеркин Ю.В.</option>
+                <option value="asostanin">Останин А.С.</option>
+                <option value="napolyakov">Поляков Н.А</option>
+              </select>
+            </p>
+            <p>
+              Подпись______________________Дата<input type="date" id="sign-date" />
+            </p>
+          </footer>
+          <div class="signature">
+            <select>
+              <option value="chief" id="checker" selected>Проверил</option>
+            </select>
+            <div class="sign"></div>
+            <select name="chief-person" id="chief-person">
+              <option value="pishugin">Пищугин Е.А.</option>
+              <option value="polyakov">Поляков Н.А.</option>
+              <option value="kalchenko">Кальченко Е.А.</option>
+              <option value="mysnik">Мысник А.В.</option>
+            </select>
+
+            <!-- <div style="border-bottom: 1px solid #000; width: 100px"></div> -->
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="resolution">
+          <div>РЕШЕНИЕ ТУ</div>
+          <textarea name="resolution" id="resolution"></textarea>
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Ответственный</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>ФИО</td>
+              <td>Дата</td>
+              <td>Подпись</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+        <div class="resolve agree">
+          <div>СОГЛАСОВАНО ОРК</div>
+
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Ответственный</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>ФИО</td>
+              <td>Дата</td>
+              <td>Подпись</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+        <div class="resolve agree">
+          <div>СОГЛАСОВАНО ОТК</div>
+
+          <table>
+            <thead>
+              <tr>
+                <th colspan="3">Ответственный</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>ФИО</td>
+              <td>Дата</td>
+              <td>Подпись</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </section>
+    </div>
+    <div class="bottom-title"></div>
+  </section>
+  <button id="add-page" onClick="addNewPage()">Добавить страницу</button>
+  <button id="refresh-page" onClick="refreshReport()">
+    Обновление отчета
+  </button>
+  <button id="save-button" onclick="saveReport()">Сохранить отчет</button>
+
   <script defer>
     const instrumets = {
       instruments: [
@@ -906,118 +914,121 @@
       ],
       year: 2023,
     };
-    document.getElementById("report-date").value = new Date();
-    document.getElementById("sign-date").value = new Date();
+
+    // document.getElementById("report-date").value = new Date();
+    // document.getElementById("sign-date").value = new Date();
     const picsInPages = {};
+    const store = document.getElementById('store')
+    document.getElementById("report-number").value = store.dataset
+      .reportNumber
+      ? store.dataset.reportNumber
+      : "";
+
+    document.getElementById("super-order-number").value = store.dataset
+      .reportNumber
+      ? store.dataset.superOrderNumber
+      : "";
+    document.getElementById("super-order").value = store.dataset
+      .reportNumber
+      ? store.dataset.superOrderNumber
+      : "";
+    document.getElementById("report-date").value = store.dataset
+      .reportNumber
+      ? store.dataset.reportDate
+      : '';
+    document.getElementById("order-number").value = store.dataset
+      .reportNumber
+      ? store.dataset.orderNumber
+      : "";
+    document.getElementById("order-date").value = store.dataset.orderDate
+      ? store.dataset.orderDate
+      : "";
+    document.getElementById("receipt-number").value = store.dataset
+      .reportNumber
+      ? store.dataset.receiptNumber
+      : "";
+    document.getElementById("receipt-date").value = store.dataset
+      .receiptDate
+      ? store.dataset.receiptDate
+      : "";
+    document.getElementById("order-object").value = store.dataset
+      .reportNumber
+      ? store.dataset.orderObject
+      : "";
+    document.getElementById("stage-select").value = store.dataset
+      .reportNumber
+      ? store.dataset.stage
+      : "";
+    document.getElementById("other-text").value = store.dataset.reportNumber
+      ? store.dataset.otherText
+      : "";
+    document.getElementById("measure-place").value = store.dataset
+      .reportNumber
+      ? store.dataset.measurePlace
+      : "";
+    document.getElementById("measure-date").value = store.dataset
+      .measureDate
+      ? store.dataset.measureDate
+      : "";
+
+    document.getElementById("first-sorce").value = store.dataset
+      .reportNumber
+      ? store.dataset.firstSource
+      : "";
+    document.getElementById("second-sorce").value = store.dataset
+      .reportNumber
+      ? store.dataset.secondSource
+      : "";
+    document.getElementById("third-sorce").value = store.dataset
+      .reportNumber
+      ? store.dataset.thirdSource
+      : "";
+
+    document.getElementById("first-instrument").value = store.dataset
+      .reportNumber
+      ? store.dataset.firstInstrument
+      : "";
+
+    document.getElementById("second-instrument").value = store.dataset
+      .reportNumber
+      ? store.dataset.secondInstrument
+      : "";
+
+    document.getElementById("third-instrument").value = store.dataset
+      .reportNumber
+      ? store.dataset.thirdInstrument
+      : "";
+    document.getElementById("conclusion").value = store.dataset.reportNumber
+      ? store.dataset.conclusion
+      : "";
+    document.getElementById("remarks").value = store.dataset.reportNumber
+      ? store.dataset.remarks
+      : "";
+    document.getElementById("full-measure").value = store.dataset
+      .reportNumber
+      ? store.dataset.fullMeashure
+      : "";
+    document.getElementById("acceptance").value = store.dataset.reportNumber
+      ? store.dataset.acceptance
+      : "";
+    document.getElementById("to-correct-required").value = store.dataset
+      .reportNumber
+      ? store.dataset.toCorrectrequired
+      : "";
+    document.getElementById("creater").value = store.dataset.reportNumber
+      ? store.dataset.creater
+      : "";
+    document.getElementById("chief-person").value = store.dataset
+      .reportNumber
+      ? store.dataset.chiefPerson
+      : "";
+    document.getElementById("sign-date").value = store.dataset.reportNumber
+      ? store.dataset.signDate
+      : '';
+    console.log(`${new Date().getDay()}-${new Date().getMonth()}-${new Date().getFullYear()}`)
     function render() {
       {
         //--------------------------------------------------------------
-        document.getElementById("report-number").value = store.dataset
-          .reportNumber
-          ? store.dataset.reportNumber
-          : "";
-
-        document.getElementById("super-order-number").value = store.dataset
-          .reportNumber
-          ? store.dataset.superOrderNumber
-          : "";
-        document.getElementById("super-order").value = store.dataset
-          .reportNumber
-          ? store.dataset.superOrderNumber
-          : "";
-        document.getElementById("report-date").value = store.dataset
-          .reportNumber
-          ? store.dataset.reportDate
-          : "";
-        document.getElementById("order-number").value = store.dataset
-          .reportNumber
-          ? store.dataset.orderNumber
-          : "";
-        document.getElementById("order-date").value = store.dataset.orderDate
-          ? store.dataset.orderDate
-          : "";
-        document.getElementById("receipt-number").value = store.dataset
-          .reportNumber
-          ? store.dataset.receiptNumber
-          : "";
-        document.getElementById("receipt-date").value = store.dataset
-          .receiptDate
-          ? store.dataset.receiptDate
-          : "";
-        document.getElementById("order-object").value = store.dataset
-          .reportNumber
-          ? store.dataset.orderObject
-          : "";
-        document.getElementById("stage-select").value = store.dataset
-          .reportNumber
-          ? store.dataset.stage
-          : "";
-        document.getElementById("other-text").value = store.dataset.reportNumber
-          ? store.dataset.otherText
-          : "";
-        document.getElementById("measure-place").value = store.dataset
-          .reportNumber
-          ? store.dataset.measurePlace
-          : "";
-        document.getElementById("measure-date").value = store.dataset
-          .measureDate
-          ? store.dataset.measureDate
-          : "";
-
-        document.getElementById("first-sorce").value = store.dataset
-          .reportNumber
-          ? store.dataset.firstSource
-          : "";
-        document.getElementById("second-sorce").value = store.dataset
-          .reportNumber
-          ? store.dataset.secondSource
-          : "";
-        document.getElementById("third-sorce").value = store.dataset
-          .reportNumber
-          ? store.dataset.thirdSource
-          : "";
-
-        document.getElementById("first-instrument").value = store.dataset
-          .reportNumber
-          ? store.dataset.firstInstrument
-          : "";
-
-        document.getElementById("second-instrument").value = store.dataset
-          .reportNumber
-          ? store.dataset.secondInstrument
-          : "";
-
-        document.getElementById("third-instrument").value = store.dataset
-          .reportNumber
-          ? store.dataset.thirdInstrument
-          : "";
-        document.getElementById("conclusion").value = store.dataset.reportNumber
-          ? store.dataset.conclusion
-          : "";
-        document.getElementById("remarks").value = store.dataset.reportNumber
-          ? store.dataset.remarks
-          : "";
-        document.getElementById("full-measure").value = store.dataset
-          .reportNumber
-          ? store.dataset.fullMeashure
-          : "";
-        document.getElementById("acceptance").value = store.dataset.reportNumber
-          ? store.dataset.acceptance
-          : "";
-        document.getElementById("to-correct-required").value = store.dataset
-          .reportNumber
-          ? store.dataset.toCorrectrequired
-          : "";
-        document.getElementById("creater").value = store.dataset.reportNumber
-          ? store.dataset.creater
-          : "";
-        document.getElementById("chief-person").value = store.dataset
-          .reportNumber
-          ? store.dataset.chiefPerson
-          : "";
-        document.getElementById("sign-date").value = store.dataset.signDate
-          ? store.dataset.signDate
-          : new Date();
 
         //--------------------------------------------------------------
         // let responce = await fetch("./data.json");
@@ -1097,30 +1108,30 @@
         "beforeend",
 
         `<p id = "page#${pageCounter}" style="display:none">${pageCounter}<p>
-    <section class="new-page" >
-    <button style="position:absolute" class="remove-page-button">Удалить страницу</button>
-      <div class="new-page-header">
-        <p class="new-page-header-title">
-          ОТЧЕТ О РЕЗУЛЬТАТАХ КОНТРОЛЯ ГЕОМЕТРИЧЕСКОЙ ФОРМЫ
-        </p>
-        <div class="new-page-header-section">
-          <span class="new-page-header-section-id">Отчет № ${reportID.value}-${superOrderNumber.value}-${year.textContent}</span>
-          <span class="new-page-header-section-date"> от ${reportDate.value} </span>
-
-          <span class="new-page-header-section-order--number">
-            Заказ № ${superOrderNumber.value} </span
-          >
-          <span class="new-page-header-section-order--description"
-            >${orderDescription.value}</span
-          >
+      <section class="new-page" >
+      <button style="position:absolute" class="remove-page-button">Удалить страницу</button>
+        <div class="new-page-header">
+          <p class="new-page-header-title">
+            ОТЧЕТ О РЕЗУЛЬТАТАХ КОНТРОЛЯ ГЕОМЕТРИЧЕСКОЙ ФОРМЫ
+          </p>
+          <div class="new-page-header-section">
+            <span class="new-page-header-section-id">Отчет № ${reportID.value}-${superOrderNumber.value}-${year.textContent}</span>
+            <span class="new-page-header-section-date"> от ${reportDate.value} </span>
+  
+            <span class="new-page-header-section-order--number">
+              Заказ № ${superOrderNumber.value} </span
+            >
+            <span class="new-page-header-section-order--description"
+              >${orderDescription.value}</span
+            >
+          </div>
         </div>
-      </div>
-      <div class="new-page-content" id=${pageCounter}>
-      <button class="buttonToAddImg"  >Добавить изображение</button>
-      </div>
-      <div class="bottom-title">Лист ${pageCounter} из </div>
-      </section>
-     `
+        <div class="new-page-content" id=${pageCounter}>
+        <button class="buttonToAddImg"  >Добавить изображение</button>
+        </div>
+        <div class="bottom-title">Лист ${pageCounter} из </div>
+        </section>
+       `
       );
       const allPagesCount = document.querySelectorAll(".bottom-title");
       allPagesCount.forEach((elem, i) => {
@@ -1140,50 +1151,43 @@
 
           section.insertAdjacentHTML(
             "beforeend",
-            ` <div  id='img#${pageCounter}-${
-              picsInPages[`${pageCounter}`][
-                picsInPages[`${pageCounter}`].length - 1
-              ]
+            ` <div  id='img#${pageCounter}-${picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+            ]
             }' class ="report-images"  >
-        <img style ="rotate:0deg" />
-        <button style="left:1090px; top:${
-          picsInPages[`${pageCounter}`][
+          <img style ="rotate:0deg" />
+          <button style="left:1090px; top:${picsInPages[`${pageCounter}`][
             picsInPages[`${pageCounter}`].length - 1
-          ] * 125
-        }px"  class ="remove-button">удалить изображение</button>
-        <button style="left:1190px; top:${
-          picsInPages[`${pageCounter}`][
+            ] * 125
+            }px"  class ="remove-button">удалить изображение</button>
+          <button style="left:1190px; top:${picsInPages[`${pageCounter}`][
             picsInPages[`${pageCounter}`].length - 1
-          ] * 125
-        }px" class = "rotate-button">повернуть</button>
-        <input style="left:1090px; top:${
-          picsInPages[`${pageCounter}`][
+            ] * 125
+            }px" class = "rotate-button">повернуть</button>
+          <input style="left:1090px; top:${picsInPages[`${pageCounter}`][
             picsInPages[`${pageCounter}`].length - 1
-          ] *
+            ] *
             125 +
-          50
-        }px" type="range" min = "0" max = "100" step ="1" class='size-button' value="100">
-        </div>
-      <input type="file" name="newImg" id="${pageCounter}-${
-              picsInPages[`${pageCounter}`][
-                picsInPages[`${pageCounter}`].length - 1
-              ]
+            50
+            }px" type="range" min = "0" max = "100" step ="1" class='size-button' value="100">
+          </div>
+        <input type="file" name="newImg" id="${pageCounter}-${picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+            ]
             }" accept="image/*" >
-    `
+      `
           );
 
           const newInput = document.getElementById(
-            `${pageCounter}-${
-              picsInPages[`${pageCounter}`][
-                picsInPages[`${pageCounter}`].length - 1
-              ]
+            `${pageCounter}-${picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+            ]
             }`
           );
           const newImg = document.getElementById(
-            `img#${pageCounter}-${
-              picsInPages[`${pageCounter}`][
-                picsInPages[`${pageCounter}`].length - 1
-              ]
+            `img#${pageCounter}-${picsInPages[`${pageCounter}`][
+            picsInPages[`${pageCounter}`].length - 1
+            ]
             }`
           );
           newInput.addEventListener("change", (e) => {
@@ -1314,7 +1318,7 @@
         //   }
       }
     });
-    function FR() {}
+    function FR() { }
     // newImg.addEventListener("change", FR);
 
     function saveReport() {
@@ -1357,4 +1361,7 @@
       store.dataset.signDate = document.getElementById("sign-date").value;
     }
   </script>
+</body>
+
+
 </html>
