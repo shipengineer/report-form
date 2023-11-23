@@ -126,7 +126,12 @@
     #stage-select {
       padding: 0 5px;
     }
-
+    #sign-date {
+      margin-left: 1rem;
+    }
+    #creater{
+      margin:0px 10px;
+    }
     .measure-date-other {
       justify-self: flex-start;
       white-space: nowrap;
@@ -438,7 +443,8 @@
       text-align: center;
       padding: 5px;
       border: 1px solid #000;
-      background-color: #8d8d8d;
+      background-color: #D3D3D3;
+      
     }
     .resolution textarea,
     .resolve textarea {
@@ -730,8 +736,8 @@
                   type="checkbox"
                   name="full-measure"
                   id="full-measure"
-                /><label for="full-measure"></label>Измерения выполнены в полном
-                объеме</label
+                /><label for="full-measure"></label> &nbspИзмерения выполнены в
+                полном объеме</label
               >
 
               <label for="acceptance" id="label_2"
@@ -739,7 +745,7 @@
                   type="checkbox"
                   name="acceptance"
                   id="acceptance"
-                /><label for="acceptance"></label>Соответсвтует РД, РКД,
+                /><label for="acceptance"></label>&nbspСоответсвтует РД, РКД,
                 НД</label
               >
               <label for="to-correct-required" id="label_3"
@@ -748,7 +754,7 @@
                   name="to-correct-required"
                   id="to-correct-required"
                 /><label for="to-correct-required"></label
-                ><b>НЕ &nbsp </b> Соответсвтует РД, РКД, НД</label
+                ><b>&nbspНЕ &nbsp </b>Соответсвтует РД, РКД, НД</label
               >
             </div>
             <footer>
@@ -763,10 +769,9 @@
                 </select>
               </p>
               <p>
-                Подпись______________________Дата<input
-                  type="date"
-                  id="sign-date"
-                />
+                Подпись______________________<p style="margin-left: 1rem"
+                  >Дата</p
+                ><input type="date" id="sign-date" />
               </p>
             </footer>
             <div class="signature">
