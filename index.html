@@ -18,7 +18,9 @@
     *:required {
       background-color: pink;
     }
-
+button:active{
+  opacity: 0.2;
+}
     #add-page {
       z-index: 2;
       position: absolute;
@@ -548,6 +550,9 @@
       button {
         display: none;
       }
+      #hotKeys{
+        display: none;
+      }
       .other,
       .size-button,
       .remove-button {
@@ -556,9 +561,24 @@
       :required {
         background-color: #fff;
       }
-    } /*# sourceMappingURL=style.css.map */
+    } 
+    #hotKeys{
+      width: fit-content;
+      position: absolute;
+      margin-left:  1100px;
+      top: 200px;
+      font-size: 16px;
+      .hotkeys-item{
+        margin-top: 2rem;
+      }
+    }
+    /*# sourceMappingURL=style.css.map */
   </style>
   <body>
+    <div id = "hotKeys">
+      <div class="hotkeys-item">Ctrl+S - сохранить документ на жестком диске</div>
+      <div class="hotkeys-item">Ctrl+P - Распечатать документ<br>печатать без полей и с фоновыми изображениями</div>
+    </div>
     <div id="store" style="display: none">Сохранность</div>
     <section class="main_page">
       <header>
@@ -918,8 +938,8 @@
       ],
       year: 2023,
     };
-    document.getElementById("report-date").value = new Date();
-    document.getElementById("sign-date").value = new Date();
+    // document.getElementById("report-date").value = new Date();
+    // document.getElementById("sign-date").value = new Date();
     const picsInPages = {};
     function render() {
       {
@@ -937,10 +957,10 @@
           .reportNumber
           ? store.dataset.superOrderNumber
           : "";
-        document.getElementById("report-date").value = store.dataset
+        document.getElementById("report-date").valueAsDate = store.dataset
           .reportNumber
           ? store.dataset.reportDate
-          : "";
+          : new Date();
         document.getElementById("order-number").value = store.dataset
           .reportNumber
           ? store.dataset.orderNumber
@@ -1027,7 +1047,7 @@
           .reportNumber
           ? store.dataset.chiefPerson
           : "pishugin";
-        document.getElementById("sign-date").value = store.dataset.signDate
+        document.getElementById("sign-date").valueAsDate = store.dataset.signDate
           ? store.dataset.signDate
           : new Date();
 
@@ -1088,7 +1108,9 @@
     // _________________________________________________________________________
     const superOrder = document.querySelector("#super-order");
     const superOrderNumber = document.querySelector("#super-order-number");
+    const title = document.querySelector('title')
     superOrderNumber.addEventListener("input", (e) => {
+
       superOrder.value = superOrderNumber.value;
     });
     // _________________________________________________________________________
@@ -1120,7 +1142,7 @@
           <span class="new-page-header-section-date"> от ${reportDate.value} </span>
 
           <span class="new-page-header-section-order--number">
-            Заказ № ${superOrderNumber.value} </span
+            Заказ № ${superOrder.value} </span
           >
           <span class="new-page-header-section-order--description"
             >${orderDescription.value}</span
@@ -1230,6 +1252,7 @@
       });
     }
     function refreshReport() {
+      title.textContent=`№${document.getElementById("report-number").value}-${document.getElementById("super-order").value}-${year.textContent} ${document.getElementById("order-object").value} `
       const IDs = document.querySelectorAll(".new-page-header-section-id");
       const date = document.querySelectorAll(".new-page-header-section-date");
       const orderNumber = document.querySelectorAll(
@@ -1254,6 +1277,7 @@
       orderObject.forEach((oO) => {
         oO.textContent = `${orderDescription.value}`;
       });
+      alert('Отчет Обновлен')
     }
     document.addEventListener("mousedown", (e) => {
       const img = e.target;
@@ -1334,7 +1358,7 @@
         document.getElementById("report-number").value;
       store.dataset.superOrderNumber =
         document.getElementById("super-order-number").value;
-      store.dataset.reportDate = document.getElementById("report-date").value;
+      store.dataset.reportDate = document.getElementById("report-date").valueAsDate;
       store.dataset.orderNumber = document.getElementById("order-number").value;
       store.dataset.orderDate = document.getElementById("order-date").value;
       store.dataset.receiptNumber =
@@ -1366,7 +1390,8 @@
       ).value;
       store.dataset.creater = document.getElementById("creater").value;
       store.dataset.chiefPerson = document.getElementById("chief-person").value;
-      store.dataset.signDate = document.getElementById("sign-date").value;
-    }
+      store.dataset.signDate = document.getElementById("sign-date").valueAsDate;
+    
+    alert("Отчет сохранен")}
   </script>
 </html>
