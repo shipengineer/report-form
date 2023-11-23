@@ -131,7 +131,9 @@
       justify-self: flex-start;
       white-space: nowrap;
     }
-
+    #chief-person {
+      border-bottom: 2px solid #000;
+    }
     #measure-place {
       width: 150px;
     }
@@ -236,7 +238,9 @@
       border: 1px solid #000;
       border-right: none;
     }
-
+    td {
+      padding: 5px;
+    }
     .instruments table,
     .sources table {
       font-size: 14px;
@@ -244,11 +248,14 @@
     }
     .instruments .instruments-item input,
     .sources .instruments-item input {
-      padding: 2px;
+      margin: 4px 0;
       width: 100%;
+      /* border: 1px solid #000; */
       border: none;
-      font-size: 14px;
+      font-size: 12px;
       text-align: center;
+      border-left: none;
+      border-right: none;
     }
     .instruments th,
     .sources th {
@@ -1014,7 +1021,7 @@
         document.getElementById("chief-person").value = store.dataset
           .reportNumber
           ? store.dataset.chiefPerson
-          : "";
+          : "pishugin";
         document.getElementById("sign-date").value = store.dataset.signDate
           ? store.dataset.signDate
           : new Date();
