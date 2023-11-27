@@ -229,6 +229,7 @@ button:active{
       text-align: left;
     }
     .order #order-object {
+    text-transform: capitalize;
       width: 80%;
     }
 
@@ -1301,7 +1302,8 @@ button:active{
     function refreshReport(e) {
       showHint(e)
 
-      title.textContent=`№${document.getElementById("report-number").value}-${document.getElementById("super-order").value}-${year.textContent} ${document.getElementById("order-object").value} `
+      title.textContent=`№${document.getElementById("report-number").value}-${document.getElementById("super-order")
+      .value}-${year.textContent}  ${document.getElementById("order-object").value} ${document.getElementById('stage-select').textContent} ${otherText.value } `
       const IDs = document.querySelectorAll(".new-page-header-section-id");
       const date = document.querySelectorAll(".new-page-header-section-date");
       const orderNumber = document.querySelectorAll(
