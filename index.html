@@ -540,7 +540,13 @@ button:active{
       top: 15mm;
       z-index: 1;
     }
-
+    .hint{
+      position: absolute;
+      top:-30px;
+      border: 2px solid  #D3D3D3;
+      background-color: bisque;
+      display: none;
+    }
     @media print {
       html,
       body {
@@ -878,11 +884,12 @@ button:active{
       </div>
       <div class="bottom-title"></div>
     </section>
-    <button id="add-page" onClick="addNewPage()">Добавить страницу</button>
-    <button id="refresh-page" onClick="refreshReport()">
+    <button id="add-page" onClick="addNewPage()">Добавить страницу </button>
+    <button id="refresh-page" onClick="refreshReport(event)">
       Обновление отчета
+      <div class="hint">Отчет обновлен</div>
     </button>
-    <button id="save-button" onclick="saveReport()">Сохранить отчет</button>
+    <button id="save-button" onclick="saveReport(event)">Сохранить отчет <div class="hint">Отчет сохранен</div></button>
   </body>
   <script defer>
     const instrumets = {
@@ -957,7 +964,7 @@ button:active{
           .reportNumber
           ? store.dataset.superOrderNumber
           : "";
-        document.getElementById("report-date").valueAsDate = store.dataset
+        document.getElementById("report-date").valueAsNumber = store.dataset
           .reportNumber
           ? store.dataset.reportDate
           : new Date();
@@ -1047,9 +1054,49 @@ button:active{
           .reportNumber
           ? store.dataset.chiefPerson
           : "pishugin";
-        document.getElementById("sign-date").valueAsDate = store.dataset.signDate
+        document.getElementById("sign-date").valueAsNumber = store.dataset.signDate
           ? store.dataset.signDate
           : new Date();
+
+        //--------------------------------------------------------------
+        const toCorReq = document.getElementById('to-correct-required')
+        const acceptanceButton = document.getElementById('acceptance')
+        document.querySelector('.check-boxes').addEventListener('change',(e)=>{
+          e.target.checked ===true
+          if(e.target.id === 'to-correct-required'){
+              if(toCorReq.checked){
+                acceptance.checked=false
+                acceptance.parentNode.setAttribute(
+          "style",
+          "text-decoration:line-through 2px"
+        );
+              }else{toCorReq.checked=false
+              toCorReq.parentNode.setAttribute(
+          "style",
+          "text-decoration:line-through 2px")}
+          }
+          if(e.target.id === 'acceptance'){
+              if(acceptance.checked){
+                toCorReq.checked=false
+                toCorReq.parentNode.setAttribute(
+          "style",
+          "text-decoration:line-through 2px"
+        );
+              }else{acceptance.checked=false
+              acceptanceButton.parentNodetoCorReq.parentNode.setAttribute(
+          "style",
+          "text-decoration:line-through 2px")}
+          }
+          const target = e.target;
+      if (target.checked === true) {
+        target.parentNode.setAttribute("style", "text-decoration:none");
+      } else {
+        target.parentNode.setAttribute(
+          "style",
+          "text-decoration:line-through 2px"
+        );
+      }
+        })
 
         //--------------------------------------------------------------
         // let responce = await fetch("./data.json");
@@ -1095,15 +1142,7 @@ button:active{
     const check_2 = document.querySelector("#acceptance");
     const check_3 = document.querySelector("#to-correct-required");
     document.querySelector(".check-boxes").addEventListener("change", (e) => {
-      const target = e.target;
-      if (target.checked === true) {
-        target.parentNode.setAttribute("style", "text-decoration:none");
-      } else {
-        target.parentNode.setAttribute(
-          "style",
-          "text-decoration:line-through 2px"
-        );
-      }
+      
     });
     // _________________________________________________________________________
     const superOrder = document.querySelector("#super-order");
@@ -1251,7 +1290,17 @@ button:active{
         }
       });
     }
-    function refreshReport() {
+    function showHint(e){
+      e.target.childNodes[1].style.display='block'
+      setTimeout(()=>{
+        e.target.childNodes[1].style.display='none'
+      },1000)
+
+
+    }
+    function refreshReport(e) {
+      showHint(e)
+
       title.textContent=`№${document.getElementById("report-number").value}-${document.getElementById("super-order").value}-${year.textContent} ${document.getElementById("order-object").value} `
       const IDs = document.querySelectorAll(".new-page-header-section-id");
       const date = document.querySelectorAll(".new-page-header-section-date");
@@ -1277,7 +1326,6 @@ button:active{
       orderObject.forEach((oO) => {
         oO.textContent = `${orderDescription.value}`;
       });
-      alert('Отчет Обновлен')
     }
     document.addEventListener("mousedown", (e) => {
       const img = e.target;
@@ -1303,8 +1351,9 @@ button:active{
       }
       document.addEventListener("mousemove", moveImg);
       function moveImg(e) {
+        if (e.target.tagName === "IMG") {
         moveAt(e.pageX, e.pageY - mainPageHeightNumber * (pageCounter - 1));
-      }
+      }}
       document.onmouseup = function () {
         pageCounter = prevPageCounter;
         document.removeEventListener("mousemove", moveImg);
@@ -1353,12 +1402,14 @@ button:active{
     function FR() {}
     // newImg.addEventListener("change", FR);
 
-    function saveReport() {
+    function saveReport(e) {
+      showHint(e)
+      refreshReport(event) 
       store.dataset.reportNumber =
         document.getElementById("report-number").value;
       store.dataset.superOrderNumber =
         document.getElementById("super-order-number").value;
-      store.dataset.reportDate = document.getElementById("report-date").valueAsDate;
+      store.dataset.reportDate = document.getElementById("report-date").valueAsNumber;
       store.dataset.orderNumber = document.getElementById("order-number").value;
       store.dataset.orderDate = document.getElementById("order-date").value;
       store.dataset.receiptNumber =
@@ -1390,8 +1441,8 @@ button:active{
       ).value;
       store.dataset.creater = document.getElementById("creater").value;
       store.dataset.chiefPerson = document.getElementById("chief-person").value;
-      store.dataset.signDate = document.getElementById("sign-date").valueAsDate;
+      store.dataset.signDate = document.getElementById("sign-date").valueAsNumber;
     
-    alert("Отчет сохранен")}
+   }
   </script>
 </html>
