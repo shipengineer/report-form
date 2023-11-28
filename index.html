@@ -44,7 +44,9 @@ button:active{
       left: 250px;
       background-color: chartreuse;
     }
-
+#vision{
+  width: 200px;
+}
     body {
       font-family: Arial, Helvetica, sans-serif;
       font-size: 14px;
@@ -127,6 +129,7 @@ button:active{
 
     #stage-select {
       padding: 0 5px;
+      width: 190px;
     }
     #sign-date {
       margin-left: 1rem;
@@ -142,7 +145,7 @@ button:active{
       border-bottom: 2px solid #000;
     }
     #measure-place {
-      width: 150px;
+      width: 180px;
     }
 
     #object {
@@ -440,6 +443,7 @@ button:active{
     .resolution,
     .resolve {
       width: 100%;
+      
     }
     .resolution div,
     .resolve div {
@@ -452,7 +456,7 @@ button:active{
     .resolution textarea,
     .resolve textarea {
       width: 100%;
-      height: 265px;
+      height: 253px;
     }
     .resolution table,
     .resolve table {
@@ -604,13 +608,13 @@ button:active{
               name="super-order-number"
               id="super-order-number"
               required
-            />-<span id="year"></span>
+             placeholder=""/>-<span id="year"></span>
           </p>
           <p>
             от
             <input type="date" name="report-date" id="report-date" required />
           </p>
-          <div class="snsz-logo">АО "СНСЗ"</div>
+          <div class="snsz-logo" style="color: #fff;">АО "СНСЗ"</div>
         </div>
         <div>
           <p>
@@ -649,13 +653,13 @@ button:active{
               <span>Этап измерений</span>
 
               <select id="stage-select" required>
-                <option value="others">Другое</option>
-                <option value="before-welding-itself">Перед сваркой</option>
-                <option value="after-welding-itself">После сварки</option>
-                <option value="before-welding-mounting">
+                <option value="Другое">Другое</option>
+                <option value="Перед сваркой">Перед сваркой</option>
+                <option value="После сварки">После сварки</option>
+                <option value="Перед сваркой на заказе">
                   Перед сваркой на заказе
                 </option>
-                <option value="before-welding-mounting">
+                <option value="После сварки на заказе">
                   После сварки на заказе
                 </option>
               </select>
@@ -678,6 +682,10 @@ button:active{
                 id="measure-place"
                 required
               />
+            </p>
+            <p>
+              Предъявление
+              <input type="text" name="vision" id="vision" required>
             </p>
           </div>
           <div class="sources">
@@ -747,7 +755,7 @@ button:active{
           </div>
           <div class="remarks">
             <div>
-              <span>Заключение</span>
+              <span>Заключение ОРК</span>
               <textarea name="conclusion" id="conclusion"></textarea>
             </div>
             <div id="remarks-zone">
@@ -824,7 +832,7 @@ button:active{
             <table>
               <thead>
                 <tr>
-                  <th colspan="3">Ответственный</th>
+                  <th colspan="3">Ответственный ведущий инженер технолог</th>
                 </tr>
               </thead>
               <tr>
@@ -948,6 +956,7 @@ button:active{
     };
     // document.getElementById("report-date").value = new Date();
     // document.getElementById("sign-date").value = new Date();
+
     const picsInPages = {};
     function render() {
       {
@@ -960,7 +969,7 @@ button:active{
         document.getElementById("super-order-number").value = store.dataset
           .reportNumber
           ? store.dataset.superOrderNumber
-          : "";
+          : "ОРК";
         document.getElementById("super-order").value = store.dataset
           .reportNumber
           ? store.dataset.superOrderNumber
@@ -1302,8 +1311,8 @@ button:active{
     function refreshReport(e) {
       showHint(e)
 
-      title.textContent=`№${document.getElementById("report-number").value}-${document.getElementById("super-order")
-      .value}-${year.textContent}  ${document.getElementById("order-object").value} ${document.getElementById('stage-select').textContent} ${otherText.value } `
+      title.textContent=`№${document.getElementById("report-number").value}-${document.getElementById("super-order-number")
+      .value}-${year.textContent} ${document.getElementById("super-order").value}  ${document.getElementById("order-object").value} ${document.getElementById('stage-select').value} ${otherText.value } `
       const IDs = document.querySelectorAll(".new-page-header-section-id");
       const date = document.querySelectorAll(".new-page-header-section-date");
       const orderNumber = document.querySelectorAll(
@@ -1404,7 +1413,73 @@ button:active{
     function FR() {}
     // newImg.addEventListener("change", FR);
 
+    function checkReport(){
+      const checkArray=[
+      document.getElementById("report-number"),
+      document.getElementById("super-order-number"),
+      document.getElementById("report-date"),
+      document.getElementById("order-number"),
+      document.getElementById("order-date"),
+      document.getElementById("receipt-number"),
+      document.getElementById("order-object"),
+      document.getElementById("stage-select"),
+      document.getElementById("other-text"),
+      document.getElementById("measure-place"),
+      document.getElementById("measure-date"),
+      document.getElementById("creater"),
+      document.getElementById('vision')
+      ];
+      let alertString = '';
+      checkArrayNames=[
+        'номер отчета',
+        "номер заказа",
+        "дата отчета",
+        "номер заявки",
+        "дата заявки",
+        "номер уведомления",
+        "объект измерений",
+        "этап",
+        "текст описания работы",
+        "место съемки",
+        "дата съемки",
+        "графу создателя отчета",
+        "предъявление"
+      ]
+      checkArray.forEach((elem,i)=>{
+        if(!elem.value){
+          alertString=alertString+checkArrayNames[i]+'\n'
+        }
+      })
+      if (alertString!==''){
+        alert(`Заполните поля: \n${alertString}\n если указаные поля не надо заполнять \n пропишите в полях пропуски`)
+        return true
+      }
+      
+    }
+ document.addEventListener('keydown',(e)=>{
+ if(e.code==='KeyP'&& e.ctrlKey===true){
+  if(checkReport()){
+    document.body.style.display='none'
+     const toFill =document.createElement('span')
+     toFill.style.position='absolute'
+     toFill.style.left='30%'
+     toFill.style.top='30%'
+     toFill.style.fontSize='64px'
+     toFill.textContent='Заполни поля 👹'
+     document.body.insertAdjacentElement('afterend',toFill)
+     setTimeout(()=>{
+    toFill.remove();
+
+  },500)
+  }
+  setTimeout(()=>{
+    document.body.style.display='block'
+
+  },1000)
+
+ }})
     function saveReport(e) {
+      checkReport()
       showHint(e)
       refreshReport(event) 
       store.dataset.reportNumber =
