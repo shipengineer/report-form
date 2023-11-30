@@ -232,10 +232,12 @@ button:active{
       text-align: left;
     }
     .order #order-object {
-    text-transform: capitalize;
+    
       width: 80%;
     }
-
+#order-object:first-letter {
+text-transform: uppercase
+}
     .sources {
       border-right: 2px solid #000;
       display: grid;
@@ -935,7 +937,7 @@ button:active{
         },
         {
           id: 6,
-          "instrument-name": "Нивелир Leica NA324 ",
+          "instrument-name": "Нивелир Leica NA324",
           "instrument-number": "941324337937",
           "instrument-certificate": "С-ДЭМ/30-08-2023/274062459",
         },
@@ -1146,6 +1148,7 @@ button:active{
       }
     }
     render();
+    document
 
     // _________________________________________________________________________
     const check_1 = document.querySelector("#full-measure");
@@ -1158,10 +1161,11 @@ button:active{
     const superOrder = document.querySelector("#super-order");
     const superOrderNumber = document.querySelector("#super-order-number");
     const title = document.querySelector('title')
-    superOrderNumber.addEventListener("input", (e) => {
 
-      superOrder.value = superOrderNumber.value;
-    });
+   // superOrderNumber.addEventListener("input", (e) => {
+
+   //  superOrder.value = superOrderNumber.value;
+   // });
     // _________________________________________________________________________
     const other = document.querySelector("#other");
     const otherText = document.querySelector("#other-text");
@@ -1309,8 +1313,10 @@ button:active{
 
     }
     function refreshReport(e) {
-      showHint(e)
 
+if(e){
+      showHint(e)
+}
       title.textContent=`№${document.getElementById("report-number").value}-${document.getElementById("super-order-number")
       .value}-${year.textContent} ${document.getElementById("super-order").value}  ${document.getElementById("order-object").value} ${document.getElementById('stage-select').value} ${otherText.value } `
       const IDs = document.querySelectorAll(".new-page-header-section-id");
@@ -1331,7 +1337,7 @@ button:active{
           .slice(0, 10)} `;
       });
       orderNumber.forEach((on) => {
-        on.textContent = `Заказ № ${superOrderNumber.value} `;
+        on.textContent = `Заказ № ${superOrder.value} `;
       });
 
       orderObject.forEach((oO) => {
@@ -1478,10 +1484,18 @@ button:active{
   },1000)
 
  }})
+document.addEventListener('keydown',(e)=>{
+ if(e.code==='KeyS'&& e.ctrlKey===true){
+
+saveReport();
+}})
+
     function saveReport(e) {
       checkReport()
-      showHint(e)
-      refreshReport(event) 
+console.log(e)
+if(e ){
+      showHint(e)}
+      refreshReport(e) 
       store.dataset.reportNumber =
         document.getElementById("report-number").value;
       store.dataset.superOrderNumber =
@@ -1521,5 +1535,11 @@ button:active{
       store.dataset.signDate = document.getElementById("sign-date").valueAsNumber;
     
    }
+
+orderDescription.addEventListener('input',(e)=>{
+
+e.target.value=e.target.value[0].toUpperCase()+e.target.value.slice(1)
+
+});
   </script>
 </html>
